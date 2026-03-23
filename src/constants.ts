@@ -1,26 +1,26 @@
-import { 
-  Users, 
-  Target, 
-  Zap, 
-  Briefcase, 
-  BarChart3, 
-  ShieldCheck, 
-  Search, 
-  Map, 
-  UserCheck, 
-  Handshake, 
+import {
+  Users,
+  Target,
+  Zap,
+  Briefcase,
+  BarChart3,
+  ShieldCheck,
+  Search,
+  Map,
+  UserCheck,
+  Handshake,
   TrendingUp,
   Clock,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Globe
 } from 'lucide-react';
 
 export const NAV_LINKS = [
-  { label: 'About Us', href: '#about' },
-  { label: 'Solutions', href: '#solutions' },
+  { label: 'Expertise', href: '#expertise' },
   { label: 'Approach', href: '#approach' },
-  { label: 'Case Studies', href: '#cases' },
-  { label: 'Contact Us', href: '#contact' },
+  { label: 'Solutions', href: '#services' },
+  { label: 'Jobs', href: '#careers' },
 ];
 
 export const SERVICES = [
@@ -131,16 +131,42 @@ export const TESTIMONIALS = [
   {
     name: 'Sarah Chen',
     role: 'VP of Engineering, CloudScale',
-    content: 'Amanzi doesn’t just send resumes. They send solutions. Every candidate they present has been thoroughly vetted for both skill and mindset. They are a true extension of our team.'
+    content: 'Amanzi doesn’t just send resumes. They send solutions. Every candidate they present has been thoroughly vetted for both skill and mindset. They are a true extension of our team.',
+    image: '/testimonial_1.png'
   },
   {
     name: 'Marcus Thorne',
     role: 'Founder, Apex Ventures',
-    content: 'In the startup world, speed is everything, but quality is non-negotiable. Amanzi delivered both. They understood our culture instantly and helped us scale without the usual growing pains.'
+    content: 'In the startup world, speed is everything, but quality is non-negotiable. Amanzi delivered both. They understood our culture instantly and helped us scale without the usual growing pains.',
+    image: '/testimonial_2.png'
   },
   {
     name: 'Elena Rodriguez',
     role: 'Head of Talent, Global Corp',
-    content: 'Their strategic approach to RPO transformed our hiring process. We’ve seen a measurable improvement in candidate quality and a significant reduction in cost-per-hire.'
+    content: 'Their strategic approach to RPO transformed our hiring process. We’ve seen a measurable improvement in candidate quality and a significant reduction in cost-per-hire.',
+    image: '/testimonial_3.png'
+  }
+];
+
+export const WHY_CHOOSE_US = [
+  {
+    title: 'Precision Sourcing',
+    description: 'We pinpoint the exact 1% of talent that fits your specific DNA and ambition.',
+    icon: Target
+  },
+  {
+    title: 'High-Velocity Hiring',
+    description: 'Our average time-to-hire is 18 days, significantly faster than the industry average.',
+    icon: Zap
+  },
+  {
+    title: 'Vetted Quality',
+    description: 'Every candidate undergoes a multi-layer evaluation for high intent and capability.',
+    icon: UserCheck
+  },
+  {
+    title: 'Global Network',
+    description: 'Access a worldwide network of passive candidates not active on job boards.',
+    icon: Globe
   }
 ];

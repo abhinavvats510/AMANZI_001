@@ -7,9 +7,12 @@
   --font-mono: "JetBrains Mono", monospace;
 
   --color-primary: #0A0A0A;
-  --color-accent: #0066FF;
+  --color-accent: #1F51FF;
   --color-surface: #F5F5F7;
   --color-muted: #8E8E93;
+  --color-dark-bg: #1A1A1A;
+  --color-neon-blue: #1F51FF;
+  --color-grid: rgba(255, 255, 255, 0.05);
 }
 
 @layer base {
@@ -17,7 +20,12 @@
     @apply bg-white text-primary font-sans antialiased selection:bg-accent selection:text-white;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display tracking-tight;
   }
 }
@@ -43,10 +51,34 @@
 }
 
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-slow {
   animation: spin-slow 12s linear infinite;
+}
+
+.grid-pattern {
+  background-image:
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.glow-blue {
+  box-shadow: 0 0 80px -10px var(--color-accent);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(0, 102, 255, 0.4);
 }
