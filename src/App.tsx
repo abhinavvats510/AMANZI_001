@@ -103,8 +103,11 @@ const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 onClick={() => {
-                  if (window.location.hash === link.href) {
-                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                  const targetId = link.href.replace('#', '');
+                  if (targetId && window.location.hash === link.href) {
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                  } else if (targetId === '') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
                 className="text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
@@ -148,7 +151,17 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="text-xl font-medium text-gray-700 flex items-center gap-2 hover:text-blue-600 transition-colors"
-                    onClick={() => !link.subLinks && setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      if (!link.subLinks) {
+                        setIsMobileMenuOpen(false);
+                        const targetId = link.href.replace('#', '');
+                        if (targetId && window.location.hash === link.href) {
+                          document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                        } else if (targetId === '') {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                      }
+                    }}
                   >
                     {link.label} {link.subLinks && <ChevronDown className="w-5 h-5 text-blue-500" />}
                   </a>
@@ -257,7 +270,12 @@ const Hero = () => {
               className="flex flex-col sm:flex-row gap-6 items-center"
             >
               <motion.button
-                onClick={() => { window.location.hash = '#services'; }}
+                onClick={() => {
+                  window.location.hash = '#services';
+                  setTimeout(() => {
+                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 10);
+                }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="bg-[#1F51FF] text-white px-10 py-4 rounded-2xl font-serif font-bold text-lg shadow-[0_15px_30px_-10px_rgba(31,81,255,0.3)] hover:shadow-[0_20px_40px_-10px_rgba(31,81,255,0.4)] transition-all"
@@ -266,7 +284,12 @@ const Hero = () => {
               </motion.button>
 
               <div 
-                onClick={() => { window.location.hash = '#contact'; }}
+                onClick={() => {
+                  window.location.hash = '#contact';
+                  setTimeout(() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 10);
+                }}
                 className="flex items-center gap-3 text-black/30 group cursor-pointer hover:text-black transition-colors"
               >
                 <div className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-all">
@@ -1019,6 +1042,12 @@ const WhyChooseUsSection = () => {
               </div>
 
               <motion.button
+                onClick={() => {
+                  window.location.hash = '#contact';
+                  setTimeout(() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 10);
+                }}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
@@ -1636,7 +1665,7 @@ const Footer = () => {
             Strategic talent acquisition for high-growth enterprises and visionary startups.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
+            <a href="https://www.linkedin.com/company/amanzi-technologies/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>
             <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
@@ -1651,22 +1680,22 @@ const Footer = () => {
         <div>
           <h4 className="font-bold mb-8 text-lg">Solutions</h4>
           <ul className="space-y-4 text-white/50">
-            <li><a href="#" className="hover:text-accent transition-colors">Permanent Staffing</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Executive Search</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Contract Staffing</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Bulk Hiring</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">RPO Solutions</a></li>
+            <li>Permanent Staffing</li>
+            <li>Executive Search</li>
+            <li>Contract Staffing</li>
+            <li>Bulk Hiring</li>
+            <li>RPO Solutions</li>
           </ul>
         </div>
 
         <div>
           <h4 className="font-bold mb-8 text-lg">Company</h4>
           <ul className="space-y-4 text-white/50">
-            <li><a href="#" className="hover:text-accent transition-colors">Our Approach</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Case Studies</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">About Us</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Careers</a></li>
-            <li><a href="#" className="hover:text-accent transition-colors">Contact</a></li>
+            <li><a href="#approach" className="hover:text-accent transition-colors">Our Approach</a></li>
+            <li><a href="#services" className="hover:text-accent transition-colors">Case Studies</a></li>
+            <li><a href="#approach" className="hover:text-accent transition-colors">About Us</a></li>
+            <li><a href="#careers" className="hover:text-accent transition-colors">Careers</a></li>
+            <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
           </ul>
         </div>
 
