@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronDown,
   Quote,
   ExternalLink,
   Linkedin,
@@ -40,7 +41,8 @@ import {
   TrendingUp,
   FileText,
   Layers,
-  Shield
+  Shield,
+  Star
 } from 'lucide-react';
 import {
   NAV_LINKS,
@@ -66,37 +68,64 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-black/5 py-3' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#" className="flex items-center gap-2 group" onClick={() => (window.location.hash = '')}>
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
+        <a href="#" className="flex items-center gap-2 group relative z-10" onClick={() => (window.location.hash = '')}>
           <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
         </a>
 
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-2 bg-white border border-accent/20 px-3 py-1.5 rounded-[2rem] shadow-[0_8px_30px_-12px_rgba(31,81,255,0.15)]">
           {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => {
-                if (window.location.hash === link.href) {
-                  window.dispatchEvent(new HashChangeEvent('hashchange'));
-                }
-              }}
-              className="text-xs font-bold uppercase tracking-[0.2em] text-black/60 hover:text-black transition-all duration-300 pointer-events-auto relative z-10"
-            >
-              {link.label}
-            </a>
+            link.subLinks ? (
+              <div key={link.label} className="relative group">
+                <a
+                  href={link.href}
+                  className="flex items-center gap-1.5 text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
+                >
+                  {link.label}
+                  <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                </a>
+                <div className="absolute top-[120%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white/95 backdrop-blur-xl border border-blue-100/50 rounded-3xl shadow-[0_20px_40px_-15px_rgba(37,99,235,0.15)] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-full transition-all duration-400 p-2 overflow-hidden">
+                  {link.subLinks.map((subLink) => (
+                    <a
+                      key={subLink.label}
+                      href={subLink.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block px-5 py-3 text-[14px] font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-2xl transition-all duration-300"
+                    >
+                      {subLink.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => {
+                  if (window.location.hash === link.href) {
+                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                  }
+                }}
+                className="text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
+              >
+                {link.label}
+              </a>
+            )
           ))}
+        </div>
+
+        <div className="flex items-center gap-4 relative z-10 flex-shrink-0">
           <a
             href="#admin"
-            className="bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center relative z-10"
+            className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
           >
             Login
           </a>
+          <button className="md:hidden text-black" onClick={() => setIsMobileMenuOpen(true)}>
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
-
-        <button className="md:hidden text-black" onClick={() => setIsMobileMenuOpen(true)}>
-          <Menu className="w-6 h-6" />
-        </button>
       </div>
 
       <AnimatePresence>
@@ -113,18 +142,35 @@ const Navbar = () => {
                 <X className="w-8 h-8 text-black" />
               </button>
             </div>
-            <div className="flex flex-col gap-8 mt-16 items-center">
+            <div className="flex flex-col gap-6 mt-16 items-center w-full">
               {NAV_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-2xl font-serif font-medium text-black/80"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
+                <div key={link.label} className="flex flex-col items-center gap-2 w-full">
+                  <a
+                    href={link.href}
+                    className="text-xl font-medium text-gray-700 flex items-center gap-2 hover:text-blue-600 transition-colors"
+                    onClick={() => !link.subLinks && setIsMobileMenuOpen(false)}
+                  >
+                    {link.label} {link.subLinks && <ChevronDown className="w-5 h-5 text-blue-500" />}
+                  </a>
+                  {link.subLinks && (
+                    <div className="flex flex-col items-center gap-3 mt-2 bg-blue-50/50 w-full py-4 rounded-3xl">
+                      {link.subLinks.map(subLink => (
+                        <a
+                          key={subLink.label}
+                          href={subLink.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[17px] font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {subLink.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
-              <button className="bg-black text-white w-full py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-8">
+              <button className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg">
                 Login
               </button>
             </div>
@@ -211,18 +257,22 @@ const Hero = () => {
               className="flex flex-col sm:flex-row gap-6 items-center"
             >
               <motion.button
+                onClick={() => { window.location.hash = '#services'; }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="bg-[#1F51FF] text-white px-10 py-4 rounded-2xl font-serif font-bold text-lg shadow-[0_15px_30px_-10px_rgba(31,81,255,0.3)] hover:shadow-[0_20px_40px_-10px_rgba(31,81,255,0.4)] transition-all"
               >
-                Watch the Strategy Video
+                Explore Our Services
               </motion.button>
 
-              <div className="flex items-center gap-3 text-black/30 group cursor-pointer hover:text-black transition-colors">
+              <div 
+                onClick={() => { window.location.hash = '#contact'; }}
+                className="flex items-center gap-3 text-black/30 group cursor-pointer hover:text-black transition-colors"
+              >
                 <div className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-all">
                   <ArrowRight className="w-4 h-4 group-hover:text-white" />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Our Methodology</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Talk To Our Experts</span>
               </div>
             </motion.div>
           </motion.div>
@@ -358,31 +408,30 @@ const FeaturedServices = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
 
-              {/* Top Right Action Button */}
-              <div className="absolute top-8 right-8 z-20">
-                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-500 border border-white/20 group-hover:border-white shadow-2xl">
-                  <ArrowRight className="w-6 h-6 text-white group-hover:text-black -rotate-45 group-hover:rotate-0 transition-all duration-500" />
-                </div>
-              </div>
+
 
               {/* Bottom Content Area */}
-              <div className="absolute bottom-10 left-10 z-20 right-10">
+              <div className="absolute bottom-8 left-8 right-8 z-20 flex flex-col items-start justify-end">
                 <motion.div
                   initial={{ x: -10, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.2 + idx * 0.1 }}
-                  className={`inline-flex px-6 py-3 rounded-2xl ${service.color} text-white font-black text-[10px] tracking-[0.2em] mb-6 shadow-2xl`}
+                  className={`inline-flex px-6 py-2.5 rounded-[1.25rem] ${service.color} text-white font-black text-[9px] tracking-[0.2em] shadow-lg relative z-10 self-start`}
                 >
                   {service.label}
                 </motion.div>
 
-                <div className="overflow-hidden">
-                  <h3 className="text-white text-3xl font-display font-bold leading-tight transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 opacity-0 group-hover:opacity-100">
-                    {service.title}
-                  </h3>
-                  <p className="text-white/60 text-sm mt-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 delay-75 opacity-0 group-hover:opacity-100 line-clamp-2">
-                    {service.description}
-                  </p>
+                <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-700 w-full">
+                  <div className="overflow-hidden">
+                    <div className="pt-5">
+                      <h3 className="text-white text-2xl md:text-3xl font-display font-bold leading-[1.1] transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 opacity-0 group-hover:opacity-100">
+                        {service.title}
+                      </h3>
+                      <p className="text-white/80 text-sm md:text-[15px] mt-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-100 opacity-0 group-hover:opacity-100 line-clamp-2 leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -504,13 +553,15 @@ const TechnologyExpertise = () => {
           {/* Left Heading */}
           <div className="lg:col-span-5">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: -100, filter: 'blur(10px)', scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)', scale: 1 }}
+              transition={{
+                duration: 1.2,
+                delay: 0.1,
+                ease: [0.16, 1, 0.3, 1]
+              }}
+              viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             >
-              <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center mb-6 border border-primary/10">
-                <Plus className="w-6 h-6 rotate-45 text-primary" />
-              </div>
               <h2 className="text-4xl md:text-6xl font-display font-medium text-primary tracking-tighter leading-[0.95] mb-8">
                 We bring <motion.span
                   animate={{ opacity: [0.4, 0.6, 0.4] }}
@@ -522,13 +573,6 @@ const TechnologyExpertise = () => {
               <p className="text-muted/70 text-base leading-relaxed max-w-sm mb-8 font-light">
                 Our consultancy is dedicated to providing high-quality solutions through technical expertise, modern architecture, and a strategic engineering approach.
               </p>
-
-              <div className="pt-6 border-t border-black/10 flex items-center justify-between group cursor-pointer max-w-sm hover:border-accent transition-all duration-300">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] group-hover:text-accent transition-colors">Explore our methodology</span>
-                <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white group-hover:bg-accent transition-colors">
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
             </motion.div>
           </div>
 
@@ -537,15 +581,27 @@ const TechnologyExpertise = () => {
             {expertise.map((exp, idx) => (
               <motion.div
                 key={exp.title}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: idx * 0.1,
-                  ease: [0.23, 1, 0.32, 1]
+                initial={{ 
+                  opacity: 0, 
+                  x: idx % 2 === 0 ? -100 : 100, 
+                  y: idx < 2 ? -100 : 100, 
+                  filter: 'blur(10px)',
+                  scale: 0.9 
                 }}
-                viewport={{ once: true }}
-                className={`p-8 rounded-[2rem] flex flex-col h-full shadow-sm border border-black/[0.04] transition-all duration-700 hover:shadow-xl hover:-translate-y-1 transform-gpu will-change-transform ${idx === activeIndex ? 'bg-accent text-white border-transparent shadow-accent/30' : 'bg-white text-primary'
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  y: 0, 
+                  filter: 'blur(0px)',
+                  scale: 1 
+                }}
+                transition={{
+                  duration: 1.2,
+                  delay: idx * 0.1 + 0.2,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                viewport={{ once: false, margin: "-50px", amount: 0.1 }}
+                className={`p-8 rounded-[2rem] flex flex-col h-full shadow-sm border border-black/[0.04] transition-all duration-700 hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02] transform-gpu will-change-transform ${idx === activeIndex ? 'bg-accent text-white border-transparent shadow-accent/30' : 'bg-white text-primary'
                   }`}
               >
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-6 border ${idx === activeIndex ? 'bg-white/10 border-white/20 text-white' : 'bg-primary/5 border-primary/10 text-primary'
@@ -1332,6 +1388,11 @@ const ApplyModal = ({ isOpen, onClose, jobTitle }: { isOpen: boolean, onClose: (
 
 const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 9;
+
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+  const currentJobs = jobs.slice((currentPage - 1) * jobsPerPage, currentPage * jobsPerPage);
 
   return (
     <>
@@ -1340,7 +1401,7 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
         onClose={() => setSelectedJob(null)}
         jobTitle={selectedJob?.title || ''}
       />
-      <section id="careers" className="min-h-screen bg-white flex flex-col justify-center overflow-hidden relative py-12 snap-start">
+      <section id="careers" className="min-h-screen bg-white pb-12 overflow-hidden relative snap-start">
         {/* Dynamic Background Elements */}
         <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block overflow-hidden">
           <img
@@ -1351,14 +1412,14 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white" />
         </div>
 
-        <div className="section-container relative z-10 w-full">
-          <div className="mb-12 text-center relative z-10">
+        <div className="section-container !pt-4 md:!pt-8 relative z-10 w-full">
+          <div className="mb-4 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-primary">
+              <h2 className="text-4xl md:text-5xl font-bold mb-3 tracking-tight text-primary">
                 Active Mandates.
               </h2>
               <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
@@ -1367,64 +1428,67 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="w-full max-w-4xl mx-auto flex flex-col pt-4">
             {jobs.length === 0 ? (
-              <div className="lg:col-span-2 bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-32 text-center shadow-sm">
+              <div className="bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-32 text-center shadow-sm">
                 <Sparkles className="w-12 h-12 text-accent/20 mx-auto mb-6" />
                 <p className="text-muted/60 text-lg font-serif italic text-primary/40">Exclusive strategic mandates are currently being finalized.</p>
                 <p className="text-muted/40 text-[10px] font-black uppercase tracking-widest mt-4">Check back shortly for premium opportunities.</p>
               </div>
             ) : (
-              jobs.map((job, idx) => (
-                <motion.div
-                  key={job.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                  viewport={{ once: true }}
-                  className="group relative bg-white border border-black/[0.03] p-10 rounded-[2.5rem] flex flex-col justify-between hover:shadow-2xl hover:shadow-accent/5 transition-all duration-700 overflow-hidden"
-                >
-                  {/* Visual Accent */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-accent/[0.02] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-accent/[0.08] transition-all duration-700" />
-
-                  <div>
-                    <div className="flex items-center gap-4 mb-10">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-accent bg-accent/5 px-4 py-2 rounded-full border border-accent/10 group-hover:bg-accent group-hover:text-white transition-all">Strategic Mandate</span>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-muted/40">{job.date}</span>
+              <>
+                {currentJobs.map((job, idx) => (
+                  <motion.div
+                    key={job.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between py-8 border-b border-gray-200 last:border-0 hover:bg-black/[0.02] px-2 sm:px-6 rounded-xl transition-colors gap-6"
+                  >
+                    <div className="flex flex-col gap-2.5">
+                      <h3 className="text-xl md:text-[22px] font-semibold text-gray-900 tracking-tight">{job.title}</h3>
+                      <div className="flex flex-wrap items-center gap-2 text-[14.5px] sm:text-[15.5px] text-gray-700">
+                        <span>US / {job.mode} ({job.location})</span>
+                        <span className="w-1 h-1 rounded-full bg-gray-400" />
+                        <span>{job.company && job.company !== 'Amanzi Group' ? job.company : "$135K - $175K"}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[14.5px] sm:text-[15.5px] text-gray-700 mt-0.5">
+                        <Star className="w-4 h-4 text-gray-700" />
+                        <span>3+ years</span>
+                      </div>
                     </div>
-
-                    <h3 className="text-2xl md:text-3xl font-display font-medium text-primary mb-6 group-hover:text-accent transition-colors duration-500">{job.title}</h3>
-
-                    <div className="flex flex-wrap gap-x-10 gap-y-4 text-primary/60 text-xs font-medium uppercase tracking-[0.1em] mb-12">
-                      <span className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent" /> {job.location}
-                      </span>
-                      <span className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary/20" /> {job.mode}
-                      </span>
-                      {job.company && (
-                        <span className="italic opacity-60">@ {job.company}</span>
-                      )}
-                    </div>
+                    <button
+                      onClick={() => setSelectedJob(job)}
+                      className="bg-[#111] hover:bg-black text-white px-8 md:px-10 py-3 rounded-xl sm:rounded-full text-sm font-medium shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] whitespace-nowrap self-start sm:self-center transition-all hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] hover:-translate-y-0.5"
+                    >
+                      Apply Now
+                    </button>
+                  </motion.div>
+                ))}
+                
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-6 mt-12 mb-4">
+                    <button
+                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-white transition-all"
+                    >
+                      <ArrowLeft className="w-5 h-5 text-gray-900" />
+                    </button>
+                    <span className="text-[15px] font-medium text-gray-500">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="w-12 h-12 flex items-center justify-center rounded-full bg-white border border-gray-200 shadow-sm hover:bg-gray-50 disabled:opacity-30 disabled:hover:bg-white transition-all"
+                    >
+                      <ArrowRight className="w-5 h-5 text-gray-900" />
+                    </button>
                   </div>
-
-                  <div className="flex items-center justify-between pt-8 border-t border-black/[0.03]">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1A3A]/40">Ref: AZ-90{idx + 1}</span>
-                    <div className="flex items-center gap-6">
-                      <button
-                        onClick={() => setSelectedJob(job)}
-                        className="bg-accent text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-accent/20 hover:scale-105 transition-all"
-                      >
-                        Apply Now
-                      </button>
-                      <button className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-primary group-hover:text-accent transition-all ring-offset-4 outline-none">
-                        View Specs
-                        <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))
+                )}
+              </>
             )}
           </div>
         </div>
@@ -1566,7 +1630,7 @@ const Footer = () => {
       <div className="section-container grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
         <div className="lg:col-span-1">
           <div className="flex items-center gap-2 mb-8">
-            <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain bg-white p-1 rounded-lg" />
+            <img src="/logo.png" alt="Amanzi Logo" className="h-12 md:h-16 w-auto object-contain" />
           </div>
           <p className="text-white/50 leading-relaxed mb-8">
             Strategic talent acquisition for high-growth enterprises and visionary startups.
@@ -1637,6 +1701,38 @@ const Footer = () => {
 // Removed SmoothScroll as it was conflicting with native position:sticky logic
 // and causing gaps in scroll-linked animations.
 
+const CyberSecurityPage = () => (
+  <section className="min-h-screen pt-32 pb-20 px-6 bg-[#fbfbfb] flex items-center justify-center">
+    <div className="text-center max-w-2xl mx-auto">
+      <div className="w-20 h-20 bg-blue-100 text-blue-600 rounded-3xl mx-auto flex items-center justify-center mb-8 shadow-xl shadow-blue-500/10">
+        <Shield className="w-10 h-10" />
+      </div>
+      <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800 tracking-tight">Enterprise Cyber Security</h1>
+      <p className="text-gray-500 text-lg mb-10 leading-relaxed">
+        Next-generation protection for your digital assets. Our Cyber Security solutions ensure your infrastructure remains unbreachable and resilient.
+      </p>
+      <a href="#" className="bg-blue-600 text-white px-8 py-3 rounded-full font-medium hover:bg-blue-700 hover:shadow-lg transition-all shadow-md">Back to Home</a>
+    </div>
+  </section>
+);
+
+const ATSPage = () => (
+  <section className="min-h-screen pt-32 pb-20 px-6 bg-[#fbfbfb] flex items-center justify-center">
+    <div className="text-center max-w-2xl mx-auto">
+      <div className="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-3xl mx-auto flex items-center justify-center mb-8 shadow-xl shadow-indigo-500/10">
+        <Database className="w-10 h-10" />
+      </div>
+      <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800 tracking-tight">Applicant Tracking System (ATS)</h1>
+      <p className="text-gray-500 text-lg mb-10 leading-relaxed">
+        Streamline your recruitment pipeline with our proprietary AI-driven ATS. Designed for precision hiring and seamless onboarding at scale.
+      </p>
+      <a href="#" className="bg-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:bg-indigo-700 hover:shadow-lg transition-all shadow-md">Back to Home</a>
+    </div>
+  </section>
+);
+
+
+
 export default function App() {
   const [currentView, setCurrentView] = useState('home');
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -1651,6 +1747,12 @@ export default function App() {
       } else if (hash === 'careers') {
         setCurrentView('careers');
         window.scrollTo(0, 0);
+      } else if (hash === 'cyber-security') {
+        setCurrentView('cyber-security');
+        window.scrollTo(0, 0);
+      } else if (hash === 'ats') {
+        setCurrentView('ats');
+        window.scrollTo(0, 0);
       } else {
         setCurrentView('home');
       }
@@ -1663,7 +1765,9 @@ export default function App() {
     fetch('/api/jobs')
       .then(res => res.json())
       .then(data => {
-        setJobs(Array.isArray(data) ? data : []);
+        if (Array.isArray(data) && data.length > 0) {
+          setJobs(data);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -1707,6 +1811,28 @@ export default function App() {
               exit={{ opacity: 0, y: -20 }}
             >
               <ActiveMandatesSection jobs={jobs} />
+            </motion.div>
+          )}
+
+          {currentView === 'cyber-security' && (
+            <motion.div
+              key="cyber-security"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <CyberSecurityPage />
+            </motion.div>
+          )}
+
+          {currentView === 'ats' && (
+            <motion.div
+              key="ats"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <ATSPage />
             </motion.div>
           )}
 

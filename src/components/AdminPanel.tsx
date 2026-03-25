@@ -192,7 +192,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
                         <h2 className="text-4xl md:text-5xl font-display font-medium text-white tracking-tighter">
                             Admin <span className="text-accent underline decoration-accent/10 underline-offset-8 italic">Dashboard</span>
                         </h2>
-                        <p className="text-white/40 mt-2">Connected to cPanel MySQL: {process.env.DB_NAME || 'amanzi_web'}</p>
+                        <p className="text-white/40 mt-2">Connected to panel {process.env.DB_NAME || ''}</p>
                     </div>
 
                     <div className="flex flex-wrap gap-4">

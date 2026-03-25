@@ -16,10 +16,16 @@ import {
   Globe
 } from 'lucide-react';
 
-export const NAV_LINKS = [
-  { label: 'Expertise', href: '#expertise' },
-  { label: 'Approach', href: '#approach' },
-  { label: 'Solutions', href: '#services' },
+export interface NavLink {
+  label: string;
+  href: string;
+  subLinks?: NavLink[];
+}
+
+export const NAV_LINKS: NavLink[] = [
+  { label: 'Home', href: '#' },
+  { label: 'About', href: '#approach' },
+  { label: 'Services', href: '#services' },
   { label: 'Jobs', href: '#careers' },
 ];
 
