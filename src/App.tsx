@@ -102,12 +102,16 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => {
+                onClick={(e) => {
                   const targetId = link.href.replace('#', '');
-                  if (targetId && window.location.hash === link.href) {
+                  if (targetId) {
+                    e.preventDefault();
                     document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                    window.location.hash = targetId;
                   } else if (targetId === '') {
+                    e.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.location.hash = '';
                   }
                 }}
                 className="text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
@@ -151,14 +155,17 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="text-xl font-medium text-gray-700 flex items-center gap-2 hover:text-blue-600 transition-colors"
-                    onClick={() => {
+                    onClick={(e) => {
                       if (!link.subLinks) {
+                        e.preventDefault();
                         setIsMobileMenuOpen(false);
                         const targetId = link.href.replace('#', '');
-                        if (targetId && window.location.hash === link.href) {
+                        if (targetId) {
                           document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
-                        } else if (targetId === '') {
+                          window.location.hash = targetId;
+                        } else {
                           window.scrollTo({ top: 0, behavior: 'smooth' });
+                          window.location.hash = '';
                         }
                       }
                     }}
@@ -270,11 +277,10 @@ const Hero = () => {
               className="flex flex-col sm:flex-row gap-6 items-center"
             >
               <motion.button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
                   window.location.hash = '#services';
-                  setTimeout(() => {
-                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 10);
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -284,11 +290,10 @@ const Hero = () => {
               </motion.button>
 
               <div 
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                   window.location.hash = '#contact';
-                  setTimeout(() => {
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 10);
                 }}
                 className="flex items-center gap-3 text-black/30 group cursor-pointer hover:text-black transition-colors"
               >
