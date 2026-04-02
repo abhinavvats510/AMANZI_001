@@ -51,7 +51,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
         setError('');
 
         try {
-            const res = await fetch('/api/admin/login', {
+            const res = await fetch('/api/admin_login.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -59,12 +59,12 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
 
             const data = await res.json();
 
-            if (res.ok && data.success) {
+            if (res.ok && data.status === 'success') {
                 setIsLoggedIn(true);
                 localStorage.setItem('admin_session', 'active');
                 setError('');
             } else {
-                setError(data.error || 'Invalid admin credentials.');
+                setError(data.message || 'Invalid admin credentials.');
             }
         } catch (err) {
             setError('Server connection failed. Is the backend running?');
@@ -80,7 +80,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
         e.preventDefault();
         setAdminMsg('');
         try {
-            const res = await fetch('/api/admin/create', {
+            const res = await fetch('/api/admin_create.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newAdmin)
@@ -105,7 +105,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
         };
 
         try {
-            const res = await fetch('/api/jobs', {
+            const res = await fetch('/api/jobs.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(jobData)
@@ -127,7 +127,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
 
     const deleteJob = async (id: string) => {
         try {
-            const res = await fetch(`/api/jobs/${id}`, { method: 'DELETE' });
+            const res = await fetch(`/api/jobs.php?id=${id}`, { method: 'DELETE' });
             if (res.ok) {
                 setJobs(jobs.filter(j => j.id !== id));
             }

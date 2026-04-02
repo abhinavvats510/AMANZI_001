@@ -697,7 +697,7 @@ const ContactSection = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/enquiry', {
+      const response = await fetch('/api/enquiry.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -871,63 +871,66 @@ const ProcessStep = ({ step, index, progress }: { step: any, index: number, prog
 
 const ProcessSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const cardsProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 30,
+  const isInView = useInView(containerRef, { amount: 0.2, once: true });
+  const [hasStarted, setHasStarted] = useState(false);
+  
+  const autoProgress = useMotionValue(0);
+  const cardsProgress = useSpring(autoProgress, {
+    stiffness: 40,
+    damping: 20,
     restDelta: 0.001
   });
 
+  useEffect(() => {
+    if (isInView && !hasStarted) {
+      setHasStarted(true);
+      animate(autoProgress, 1, {
+        duration: 8, // 8 seconds to complete the full sequence
+        ease: "linear"
+      });
+    }
+  }, [isInView, hasStarted, autoProgress]);
+
   return (
-    <section id="approach" className="relative bg-[#FBFBFB]">
-      {/* Increased scroll length to accommodate heading + cards reveal */}
-      <div className="h-[200vh] lg:h-[350vh] relative" ref={containerRef}>
-        {/* Sticky container pins EVERYTHING (Heading + Cards) */}
-        <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-          <div className="absolute inset-0 grid-pattern opacity-[0.03] pointer-events-none" />
-          <div className="section-container !py-0 relative flex flex-col items-center">
+    <section id="approach" className="relative bg-[#FBFBFB] py-24 md:py-32" ref={containerRef}>
+      <div className="absolute inset-0 grid-pattern opacity-[0.03] pointer-events-none" />
+      <div className="section-container !py-0 relative flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-16 relative z-10"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            Our Process.
+          </h2>
+          <p className="text-muted text-lg max-w-xl mx-auto">
+            Our process eliminates guesswork and delivers high-intent talent every single time.
+          </p>
+        </motion.div>
+
+        <div className="relative w-full">
+          {/* Progressive Line */}
+          <div className="hidden lg:block absolute top-[50%] left-0 right-0 h-[2px] bg-black/[0.05] -translate-y-1/2">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-16 relative z-10"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                Our Process.
-              </h2>
-              <p className="text-muted text-lg max-w-xl mx-auto">
-                Our process eliminates guesswork and delivers high-intent talent every single time.
-              </p>
-            </motion.div>
+              className="h-full bg-accent origin-left"
+              style={{ scaleX: cardsProgress }}
+            />
+            <motion.div
+              className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-accent shadow-lg"
+              style={{ left: useTransform(cardsProgress, [0, 1], ["0%", "100%"]), x: "-50%" }}
+            />
+          </div>
 
-            <div className="relative w-full">
-              {/* Progressive Line */}
-              <div className="hidden lg:block absolute top-[50%] left-0 right-0 h-[2px] bg-black/[0.05] -translate-y-1/2">
-                <motion.div
-                  className="h-full bg-accent origin-left"
-                  style={{ scaleX: cardsProgress }}
-                />
-                <motion.div
-                  className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-accent shadow-lg"
-                  style={{ left: useTransform(cardsProgress, [0, 1], ["0%", "100%"]), x: "-50%" }}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 w-full">
-                {PROCESS_STEPS.map((step, idx) => (
-                  <ProcessStep
-                    key={step.id}
-                    step={step}
-                    index={idx}
-                    progress={cardsProgress}
-                  />
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 w-full">
+            {PROCESS_STEPS.map((step, idx) => (
+              <ProcessStep
+                key={step.id}
+                step={step}
+                index={idx}
+                progress={cardsProgress}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -1323,7 +1326,7 @@ const ApplyModal = ({ isOpen, onClose, jobTitle }: { isOpen: boolean, onClose: (
         data.append('resume', file);
       }
 
-      const response = await fetch('/api/apply', {
+      const response = await fetch('/api/apply.php', {
         method: 'POST',
         body: data,
       });
@@ -1823,7 +1826,7 @@ export default function App() {
     handleHashChange();
 
     // Fetch jobs from backend API
-    fetch('/api/jobs')
+    fetch('/api/jobs.php')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
