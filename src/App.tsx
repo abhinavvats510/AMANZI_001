@@ -67,81 +67,89 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-black/5 py-3' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
-        <a href="#" className="flex items-center gap-2 group relative z-10" onClick={() => (window.location.hash = '')}>
-          <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
-        </a>
+    <>
+      <nav className={`fixed w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-black/5 py-3' : 'bg-white/10 backdrop-blur-md md:bg-transparent py-5'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
+          <a href="#" className="flex items-center gap-2 group relative z-10" onClick={() => (window.location.hash = '')}>
+            <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+          </a>
 
-        <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-2 bg-white border border-accent/20 px-3 py-1.5 rounded-[2rem] shadow-[0_8px_30px_-12px_rgba(31,81,255,0.15)]">
-          {NAV_LINKS.map((link) => (
-            link.subLinks ? (
-              <div key={link.label} className="relative group">
+          <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-2 bg-white border border-accent/20 px-3 py-1.5 rounded-[2rem] shadow-[0_8px_30px_-12px_rgba(31,81,255,0.15)]">
+            {NAV_LINKS.map((link) => (
+              link.subLinks ? (
+                <div key={link.label} className="relative group">
+                  <a
+                    href={link.href}
+                    className="flex items-center gap-1.5 text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
+                  >
+                    {link.label}
+                    <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  </a>
+                  <div className="absolute top-[120%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white/95 backdrop-blur-xl border border-blue-100/50 rounded-3xl shadow-[0_20px_40px_-15px_rgba(37,99,235,0.15)] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-full transition-all duration-400 p-2 overflow-hidden">
+                    {link.subLinks.map((subLink) => (
+                      <a
+                        key={subLink.label}
+                        href={subLink.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block px-5 py-3 text-[14px] font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-2xl transition-all duration-300"
+                      >
+                        {subLink.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : (
                 <a
+                  key={link.label}
                   href={link.href}
-                  className="flex items-center gap-1.5 text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
+                  onClick={(e) => {
+                    const targetId = link.href.replace('#', '');
+                    if (targetId) {
+                      e.preventDefault();
+                      const element = document.getElementById(targetId);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                      window.location.hash = targetId;
+                    } else if (targetId === '') {
+                      e.preventDefault();
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      window.location.hash = '';
+                    }
+                  }}
+                  className="text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
                 >
                   {link.label}
-                  <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
                 </a>
-                <div className="absolute top-[120%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white/95 backdrop-blur-xl border border-blue-100/50 rounded-3xl shadow-[0_20px_40px_-15px_rgba(37,99,235,0.15)] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:top-full transition-all duration-400 p-2 overflow-hidden">
-                  {link.subLinks.map((subLink) => (
-                    <a
-                      key={subLink.label}
-                      href={subLink.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block px-5 py-3 text-[14px] font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-2xl transition-all duration-300"
-                    >
-                      {subLink.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => {
-                  const targetId = link.href.replace('#', '');
-                  if (targetId) {
-                    e.preventDefault();
-                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
-                    window.location.hash = targetId;
-                  } else if (targetId === '') {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    window.location.hash = '';
-                  }
-                }}
-                className="text-[15px] font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50/80 px-4 py-2 rounded-full transition-all duration-300 pointer-events-auto relative z-10"
-              >
-                {link.label}
-              </a>
-            )
-          ))}
-        </div>
+              )
+            ))}
+          </div>
 
-        <div className="flex items-center gap-4 relative z-10 flex-shrink-0">
-          <a
-            href="#admin"
-            className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
-          >
-            Login
-          </a>
-          <button className="md:hidden text-black" onClick={() => setIsMobileMenuOpen(true)}>
-            <Menu className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-4 relative z-10 flex-shrink-0">
+            <a
+              href="#admin"
+              className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
+            >
+              Login
+            </a>
+            <button 
+              className="md:hidden bg-white p-2 rounded-xl text-black shadow-md border border-black/5" 
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
         </div>
-      </div>
-
+      </nav>
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 bg-white z-50 p-6 flex flex-col"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 bg-white z-[150] p-6 flex flex-col"
           >
             <div className="flex justify-between items-center mb-12">
               <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain" />
@@ -161,7 +169,13 @@ const Navbar = () => {
                         setIsMobileMenuOpen(false);
                         const targetId = link.href.replace('#', '');
                         if (targetId) {
-                          document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+                          const element = document.getElementById(targetId);
+                          // Use a slight delay for mobile menu transitions
+                          setTimeout(() => {
+                            if (element) {
+                              element.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          }, 300);
                           window.location.hash = targetId;
                         } else {
                           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -190,14 +204,18 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <button className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg">
+              <a
+                href="#admin"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg text-center"
+              >
                 Login
-              </button>
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 
@@ -242,7 +260,7 @@ const AnimatedCounter = ({ value, suffix }: { value: string, suffix: string }) =
 
 const Hero = () => {
   return (
-    <section className="relative h-screen bg-white overflow-hidden flex items-center">
+    <section className="relative min-h-screen lg:h-screen bg-white overflow-hidden flex items-center pt-28 lg:pt-0">
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <svg className="w-full h-full opacity-[0.03]" viewBox="0 0 100 100">
@@ -262,8 +280,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#1A1A1A] leading-[1.05] tracking-tight mb-8">
-              Empower your <br />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#1A1A1A] leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8">
+              Empower your <br className="hidden sm:block" />
               <span className="italic text-black/40">excellence</span> for <br />
               Strategic Growth
             </h1>
@@ -306,7 +324,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Right Column: Premium Collage Frame */}
-          <div className="relative h-[350px] md:h-[450px] lg:h-[550px] w-full">
+          <div className="relative h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] w-full mt-12 lg:mt-0">
             {/* Artistic Connectivity Lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 600">
               <motion.path
@@ -326,7 +344,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: 50, rotate: 2 }}
               animate={{ opacity: 1, x: 0, rotate: 0 }}
               transition={{ duration: 1.2, delay: 0.4 }}
-              className="absolute top-0 right-0 w-[65%] h-[55%] rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl z-20"
+              className="absolute top-0 right-0 w-[70%] sm:w-[65%] h-[55%] rounded-[2rem] sm:rounded-[3rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-20"
             >
               <img src="/hero_collage_1.png" alt="Strategic Mandates" className="w-full h-full object-cover" />
             </motion.div>
@@ -336,7 +354,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: -50, rotate: -2 }}
               animate={{ opacity: 1, x: 0, rotate: 0 }}
               transition={{ duration: 1.2, delay: 0.6 }}
-              className="absolute top-[30%] left-0 w-[55%] h-[50%] rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl z-10"
+              className="absolute top-[25%] sm:top-[30%] left-0 w-[60%] sm:w-[55%] h-[50%] rounded-[2rem] sm:rounded-[3rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-10"
             >
               <img src="/hero_collage_2.png" alt="Collaboration" className="w-full h-full object-cover" />
             </motion.div>
@@ -346,7 +364,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.8 }}
-              className="absolute bottom-5 right-[10%] w-[50%] h-[40%] rounded-[2.5rem] overflow-hidden border-8 border-white shadow-2xl z-30 transform hover:scale-105 transition-transform duration-700"
+              className="absolute bottom-2 sm:bottom-5 right-[5%] sm:right-[10%] w-[55%] sm:w-[50%] h-[40%] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-30 transform hover:scale-105 transition-transform duration-700"
             >
               <img src="/hero_collage_3.png" alt="Leadership" className="w-full h-full object-cover" />
             </motion.div>
@@ -577,7 +595,7 @@ const TechnologyExpertise = () => {
 
       {/* Main Grid Content */}
       <div className="section-container !py-0">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Heading */}
           <div className="lg:col-span-5">
             <motion.div
@@ -590,7 +608,7 @@ const TechnologyExpertise = () => {
               }}
               viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             >
-              <h2 className="text-4xl md:text-6xl font-display font-medium text-primary tracking-tighter leading-[0.95] mb-8">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-medium text-primary tracking-tighter leading-[1.1] md:leading-[0.95] mb-6 md:mb-8">
                 We bring <motion.span
                   animate={{ opacity: [0.4, 0.6, 0.4] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -831,7 +849,7 @@ const ProcessStep = ({ step, index, progress }: { step: any, index: number, prog
     >
       <motion.div
         style={{ y: numberY, opacity: numberOpacity }}
-        className="text-[9rem] font-display font-black text-black absolute -top-20 -left-10 -z-10 pointer-events-none"
+        className="text-[6rem] sm:text-[9rem] font-display font-black text-black absolute -top-12 sm:-top-20 -left-5 sm:-left-10 -z-10 pointer-events-none"
       >
         {step.id}
       </motion.div>
@@ -867,7 +885,7 @@ const ProcessSection = () => {
   return (
     <section id="approach" className="relative bg-[#FBFBFB]">
       {/* Increased scroll length to accommodate heading + cards reveal */}
-      <div className="h-[350vh] relative" ref={containerRef}>
+      <div className="h-[200vh] lg:h-[350vh] relative" ref={containerRef}>
         {/* Sticky container pins EVERYTHING (Heading + Cards) */}
         <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
           <div className="absolute inset-0 grid-pattern opacity-[0.03] pointer-events-none" />
@@ -899,7 +917,7 @@ const ProcessSection = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 w-full">
                 {PROCESS_STEPS.map((step, idx) => (
                   <ProcessStep
                     key={step.id}
@@ -1074,6 +1092,15 @@ const WhyChooseUsSection = () => {
 
 const GallerySection = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const images = [
     {
       src: '/gallery_1.png',
@@ -1200,7 +1227,7 @@ const GallerySection = () => {
                 key={idx}
                 initial={false}
                 animate={{
-                  x: distance * 180,
+                  x: isMobile ? distance * 110 : distance * 180,
                   scale: isActive ? 1 : Math.max(0.6, 0.8 - (Math.abs(distance) * 0.1)),
                   rotateY: distance * -35,
                   zIndex: 20 - Math.abs(distance),
@@ -1811,6 +1838,19 @@ export default function App() {
 
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  useEffect(() => {
+    if (currentView === 'home' && window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      const validHomeHashes = ['expertise', 'services', 'approach', 'careers']; // approach and careers are relevant too
+      if (validHomeHashes.includes(targetId)) {
+        const timer = setTimeout(() => {
+          document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+        }, 300); // 300ms is enough for most mounts
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [currentView]);
 
   return (
     <div className="relative bg-white select-none selection:bg-accent/20">
