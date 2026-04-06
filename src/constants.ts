@@ -133,27 +133,6 @@ export const CASE_STUDIES = [
   }
 ];
 
-export const TESTIMONIALS = [
-  {
-    name: 'Sarah Chen',
-    role: 'VP of Engineering, CloudScale',
-    content: 'Amanzi doesn’t just send resumes. They send solutions. Every candidate they present has been thoroughly vetted for both skill and mindset. They are a true extension of our team.',
-    image: '/assets/images/testimonial_1.png'
-  },
-  {
-    name: 'Marcus Thorne',
-    role: 'Founder, Apex Ventures',
-    content: 'In the startup world, speed is everything, but quality is non-negotiable. Amanzi delivered both. They understood our culture instantly and helped us scale without the usual growing pains.',
-    image: '/assets/images/testimonial_2.png'
-  },
-  {
-    name: 'Elena Rodriguez',
-    role: 'Head of Talent, Global Corp',
-    content: 'Their strategic approach to RPO transformed our hiring process. We’ve seen a measurable improvement in candidate quality and a significant reduction in cost-per-hire.',
-    image: '/assets/images/testimonial_3.png'
-  }
-];
-
 export const WHY_CHOOSE_US = [
   {
     title: 'Precision Sourcing',

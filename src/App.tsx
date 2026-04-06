@@ -13,7 +13,6 @@ import {
   X,
   ChevronRight,
   ChevronDown,
-  Quote,
   ExternalLink,
   Linkedin,
   Twitter,
@@ -51,7 +50,6 @@ import {
   PROCESS_STEPS,
   STATS,
   CASE_STUDIES,
-  TESTIMONIALS,
   WHY_CHOOSE_US
 } from './constants';
 import { AdminPanel, Job } from './components/AdminPanel';
@@ -1594,128 +1592,7 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
 
 
 
-const TestimonialsSection = () => {
-  const [current, setCurrent] = useState(0);
 
-  const next = () => setCurrent((prev) => (prev + 1) % TESTIMONIALS.length);
-  const prev = () => setCurrent((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      next();
-    }, 10000);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <section id="testimonials" className="min-h-screen bg-primary flex flex-col justify-center overflow-hidden relative py-12 snap-start">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent/[0.05] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3")` }} />
-      </div>
-
-      <div className="section-container relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-
-          {/* Left Column: Typography & Navigation */}
-          <div className="lg:col-span-12 xl:col-span-5">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-1.5 rounded-full mb-8"
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
-              <span className="text-[9px] font-black uppercase tracking-[0.3em]">Institutional Influence</span>
-            </motion.div>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-              viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4"
-            >
-              The Voice of Impact.
-            </motion.h2>
-
-            <div className="flex gap-4 mt-8">
-              <button
-                onClick={prev}
-                className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 hover:border-white/30 transition-all duration-500 group"
-              >
-                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={next}
-                className="w-14 h-14 rounded-full bg-accent flex items-center justify-center text-primary shadow-xl shadow-accent/20 hover:scale-110 transition-all duration-500 group"
-              >
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Hero Slider */}
-          <div className="lg:col-span-12 xl:col-span-7 relative pt-8 xl:pt-0">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: 50, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -50, scale: 1.05 }}
-                transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-white shadow-2xl min-h-[400px] md:min-h-[480px]"
-              >
-                {/* Visual side */}
-                <div className="relative h-64 md:h-auto overflow-hidden">
-                  <img
-                    src={TESTIMONIALS[current].image}
-                    alt={TESTIMONIALS[current].name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[3s]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-transparent mix-blend-multiply" />
-                  <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white z-10">
-                    <div className="w-12 h-[1px] bg-accent mb-4" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Strategic Partner</span>
-                  </div>
-                </div>
-
-                {/* Testimonial side */}
-                <div className="p-8 md:p-10 flex flex-col justify-center relative bg-white">
-                  <Quote className="absolute top-6 right-6 w-16 h-16 text-black/[0.02] rotate-12" />
-
-                  <div className="relative z-10">
-                    <p className="text-xl md:text-2xl font-serif font-medium text-primary leading-relaxed italic mb-6 md:mb-8">
-                      "{TESTIMONIALS[current].content}"
-                    </p>
-
-                    <div className="mt-auto">
-                      <h4 className="text-xl font-bold text-primary mb-0.5">{TESTIMONIALS[current].name}</h4>
-                      <p className="text-[9px] font-black uppercase tracking-widest text-muted/60">{TESTIMONIALS[current].role}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Pagination dots */}
-            <div className="absolute -bottom-8 left-6 flex gap-3">
-              {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`h-1 transition-all duration-700 rounded-full ${i === current ? 'w-10 bg-accent' : 'w-2 bg-white/20'}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 
 const Footer = () => {
@@ -1909,7 +1786,6 @@ export default function App() {
               <StatsSection />
               <WhyChooseUsSection />
               <GallerySection />
-              <TestimonialsSection />
               <ContactSection />
             </motion.div>
           )}
