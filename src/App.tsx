@@ -71,7 +71,7 @@ const Navbar = () => {
       <nav className={`fixed w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-black/5 py-3' : 'bg-white/10 backdrop-blur-md md:bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
           <a href="#" className="flex items-center gap-2 group relative z-10" onClick={() => (window.location.hash = '')}>
-            <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+            <img src="/assets/images/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
 
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-2 bg-white border border-accent/20 px-3 py-1.5 rounded-[2rem] shadow-[0_8px_30px_-12px_rgba(31,81,255,0.15)]">
@@ -133,8 +133,8 @@ const Navbar = () => {
             >
               Login
             </a>
-            <button 
-              className="md:hidden bg-white p-2 rounded-xl text-black shadow-md border border-black/5" 
+            <button
+              className="md:hidden bg-white p-2 rounded-xl text-black shadow-md border border-black/5"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu className="w-6 h-6" />
@@ -152,7 +152,7 @@ const Navbar = () => {
             className="fixed inset-0 bg-white z-[150] p-6 flex flex-col"
           >
             <div className="flex justify-between items-center mb-12">
-              <img src="/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain" />
+              <img src="/assets/images/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain" />
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="w-8 h-8 text-black" />
               </button>
@@ -307,7 +307,7 @@ const Hero = () => {
                 Explore Our Services
               </motion.button>
 
-              <div 
+              <div
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -346,7 +346,7 @@ const Hero = () => {
               transition={{ duration: 1.2, delay: 0.4 }}
               className="absolute top-0 right-0 w-[70%] sm:w-[65%] h-[55%] rounded-[2rem] sm:rounded-[3rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-20"
             >
-              <img src="/hero_collage_1.png" alt="Strategic Mandates" className="w-full h-full object-cover" />
+              <img src="/assets/images/hero_collage_1.png" alt="Strategic Mandates" className="w-full h-full object-cover" />
             </motion.div>
 
             {/* Supporting Item (Middle Left) */}
@@ -356,7 +356,7 @@ const Hero = () => {
               transition={{ duration: 1.2, delay: 0.6 }}
               className="absolute top-[25%] sm:top-[30%] left-0 w-[60%] sm:w-[55%] h-[50%] rounded-[2rem] sm:rounded-[3rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-10"
             >
-              <img src="/hero_collage_2.png" alt="Collaboration" className="w-full h-full object-cover" />
+              <img src="/assets/images/hero_collage_2.png" alt="Collaboration" className="w-full h-full object-cover" />
             </motion.div>
 
             {/* Action Item (Bottom Offset) */}
@@ -366,7 +366,7 @@ const Hero = () => {
               transition={{ duration: 1.2, delay: 0.8 }}
               className="absolute bottom-2 sm:bottom-5 right-[5%] sm:right-[10%] w-[55%] sm:w-[50%] h-[40%] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border-4 sm:border-8 border-white shadow-2xl z-30 transform hover:scale-105 transition-transform duration-700"
             >
-              <img src="/hero_collage_3.png" alt="Leadership" className="w-full h-full object-cover" />
+              <img src="/assets/images/hero_collage_3.png" alt="Leadership" className="w-full h-full object-cover" />
             </motion.div>
           </div>
         </div>
@@ -391,28 +391,28 @@ const FeaturedServices = () => {
       title: 'AI & Analytics',
       label: 'AI & STRATEGY',
       description: 'Advanced neural networks and predictive modeling.',
-      image: '/ai_analytics_service_bg.png',
+      image: '/assets/images/ai_analytics_service_bg.png',
       color: 'bg-accent'
     },
     {
       title: 'Staffing Solutions',
       label: 'TALENT NETWORK',
       description: 'The top 1% of digital and engineering talent.',
-      image: '/staffing_service_bg.png',
+      image: '/assets/images/staffing_service_bg.png',
       color: 'bg-accent'
     },
     {
       title: 'Industry Domains',
       label: 'DOMAIN MASTERY',
       description: 'Deep expertise in BFSI, Healthcare, and Tech.',
-      image: '/industry_expertise_bg.png',
+      image: '/assets/images/industry_expertise_bg.png',
       color: 'bg-accent'
     },
     {
       title: 'Cyber Security',
       label: 'DATA DEFENSE',
       description: 'Elite technical practices for digital fortification.',
-      image: '/cyber_security_service_bg.png',
+      image: '/assets/images/cyber_security_service_bg.png',
       color: 'bg-accent'
     }
   ];
@@ -627,19 +627,19 @@ const TechnologyExpertise = () => {
             {expertise.map((exp, idx) => (
               <motion.div
                 key={exp.title}
-                initial={{ 
-                  opacity: 0, 
-                  x: idx % 2 === 0 ? -100 : 100, 
-                  y: idx < 2 ? -100 : 100, 
+                initial={{
+                  opacity: 0,
+                  x: idx % 2 === 0 ? -100 : 100,
+                  y: idx < 2 ? -100 : 100,
                   filter: 'blur(10px)',
-                  scale: 0.9 
+                  scale: 0.9
                 }}
-                whileInView={{ 
-                  opacity: 1, 
-                  x: 0, 
-                  y: 0, 
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
                   filter: 'blur(0px)',
-                  scale: 1 
+                  scale: 1
                 }}
                 transition={{
                   duration: 1.2,
@@ -720,39 +720,43 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="bg-white py-32">
-      <div className="section-container grid lg:grid-cols-2 gap-20">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
+    <section id="contact" className="bg-white py-32 relative z-10 pointer-events-auto">
+      <div className="section-container grid lg:grid-cols-2 gap-20 relative z-20 pointer-events-auto">
+        <div className="relative z-30 pointer-events-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Let’s Start a Conversation.</h2>
           <p className="text-muted text-lg mb-12 max-w-2xl">
             Whether you're looking to scale a team or secure a visionary leader, we're ready to help you navigate the talent landscape.
           </p>
 
-          <div className="space-y-8">
-            <div className="flex items-center gap-6">
-              <div className="w-12 h-12 bg-surface rounded-full flex items-center justify-center">
+          <div className="space-y-8 relative z-50 pointer-events-auto isolate">
+            <a 
+              href="mailto:info@amanzigroup.co.in"
+              className="flex items-center gap-6 group cursor-pointer hover:no-underline"
+            >
+              <div className="w-12 h-12 bg-surface rounded-full flex items-center justify-center group-hover:bg-accent/10 transition-colors duration-300">
                 <Mail className="w-6 h-6 text-accent" />
               </div>
               <div>
                 <div className="text-sm font-bold text-muted uppercase tracking-widest">Email Us</div>
-                <div className="text-lg font-bold">info@amanzigroup.co.in</div>
+                <div className="text-lg font-bold text-primary group-hover:text-accent transition-colors duration-300">info@amanzigroup.co.in</div>
               </div>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="w-12 h-12 bg-surface rounded-full flex items-center justify-center">
+            </a>
+            <a 
+              href="https://www.linkedin.com/company/3787715/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-6 group cursor-pointer hover:no-underline"
+            >
+              <div className="w-12 h-12 bg-surface rounded-full flex items-center justify-center group-hover:bg-accent/10 transition-colors duration-300">
                 <Linkedin className="w-6 h-6 text-accent" />
               </div>
               <div>
                 <div className="text-sm font-bold text-muted uppercase tracking-widest">Follow Us</div>
-                <div className="text-lg font-bold">linkedin.com/company/amanzi</div>
+                <div className="text-lg font-bold text-primary group-hover:text-accent transition-colors duration-300">linkedin.com/company/3787715/</div>
               </div>
-            </div>
+            </a>
           </div>
-        </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, x: 30 }}
@@ -769,7 +773,7 @@ const ContactSection = () => {
               <p className="text-muted/60">We'll get back to you within 24 business hours.</p>
             </div>
           ) : (
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form id="contact-form" className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold uppercase tracking-wider text-muted">Full Name</label>
@@ -777,7 +781,7 @@ const ContactSection = () => {
                     required
                     type="text"
                     className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Enter your name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
@@ -788,7 +792,7 @@ const ContactSection = () => {
                     required
                     type="email"
                     className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-                    placeholder="john@company.com"
+                    placeholder="Enter your email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
@@ -873,7 +877,7 @@ const ProcessSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { amount: 0.2, once: true });
   const [hasStarted, setHasStarted] = useState(false);
-  
+
   const autoProgress = useMotionValue(0);
   const cardsProgress = useSpring(autoProgress, {
     stiffness: 40,
@@ -993,7 +997,7 @@ const WhyChooseUsSection = () => {
                 viewport={{ once: true }}
                 className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5"
               >
-                <img src="/grid-1.png" alt="Global Connectivity" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/assets/images/grid-1.png" alt="Global Connectivity" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -1002,7 +1006,7 @@ const WhyChooseUsSection = () => {
                 viewport={{ once: true }}
                 className="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5"
               >
-                <img src="/grid-3.png" alt="Velocity" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/assets/images/grid-3.png" alt="Velocity" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </motion.div>
             </div>
             <div className="pt-12 space-y-4">
@@ -1013,7 +1017,7 @@ const WhyChooseUsSection = () => {
                 viewport={{ once: true }}
                 className="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5"
               >
-                <img src="/grid-2.png" alt="Strategy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/assets/images/grid-2.png" alt="Strategy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -1022,7 +1026,7 @@ const WhyChooseUsSection = () => {
                 viewport={{ once: true }}
                 className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5"
               >
-                <img src="/grid-4.png" alt="Future" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="/assets/images/grid-4.png" alt="Future" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </motion.div>
             </div>
 
@@ -1106,61 +1110,61 @@ const GallerySection = () => {
 
   const images = [
     {
-      src: '/gallery_1.png',
+      src: '/assets/images/gallery_1.png',
       title: 'Global Connectivity',
       category: 'Infrastructure',
       description: 'Powering seamless cross-border communication and data exchange through high-speed edge networks.'
     },
     {
-      src: '/gallery_2.png',
+      src: '/assets/images/gallery_2.png',
       title: 'Digital Research',
       category: 'Innovation',
       description: 'Exploring the boundaries of algorithmic efficiency and neural computing in our dedicated R&D labs.'
     },
     {
-      src: '/gallery_3.png',
+      src: '/assets/images/gallery_3.png',
       title: 'Strategic Hub',
       category: 'Architecture',
       description: 'Designing the blueprint for scalable enterprise ecosystems and robust cloud-native infrastructures.'
     },
     {
-      src: '/gallery_4.png',
+      src: '/assets/images/gallery_4.png',
       title: 'Creative Lab',
       category: 'Culture',
       description: 'Where design thinking meets technical excellence, fostering an environment of rapid prototyping.'
     },
     {
-      src: '/gallery_5.png',
+      src: '/assets/images/gallery_5.png',
       title: 'Network Operations',
       category: 'Defense',
       description: 'Ensuring absolute data integrity and system resilience against evolving global cyber threats.'
     },
     {
-      src: '/gallery_6.png',
+      src: '/assets/images/gallery_6.png',
       title: 'Future Platforms',
       category: 'Systems',
       description: 'Architecting next-generation software platforms that redefine the human-technology interaction.'
     },
     {
-      src: '/gallery_3.png',
+      src: '/assets/images/gallery_3.png',
       title: 'Agile Synergy',
       category: 'Workforce',
       description: 'Dynamically aligning cross-functional elite teams to deliver complex solutions with unmatched speed.'
     },
     {
-      src: '/gallery_1.png',
+      src: '/assets/images/gallery_1.png',
       title: 'Enterprise Growth',
       category: 'Scalability',
       description: 'Leveraging data-driven insights to fuel sustainable expansion and market leadership for our clients.'
     },
     {
-      src: '/gallery_2.png',
+      src: '/assets/images/gallery_2.png',
       title: 'Cloud Resilience',
       category: 'Security',
       description: 'Building self-healing architectures that maintain services even under extreme operational stress.'
     },
     {
-      src: '/gallery_4.png',
+      src: '/assets/images/gallery_4.png',
       title: 'Neural Networks',
       category: 'Intelligence',
       description: 'Integrating deep learning models to predict market shifts and optimize internal workflows.'
@@ -1465,34 +1469,38 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
         onClose={() => setSelectedJob(null)}
         jobTitle={selectedJob?.title || ''}
       />
-      <section id="careers" className="min-h-screen bg-white pb-12 overflow-hidden relative snap-start">
-        {/* Dynamic Background Elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-full hidden lg:block overflow-hidden">
-          <img
-            src="/careers_bg.png"
-            alt="Strategic Careers"
-            className="w-full h-full object-cover opacity-10 mix-blend-multiply transition-all duration-1000 grayscale hover:grayscale-0"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white" />
-        </div>
-
-        <div className="section-container !pt-4 md:!pt-8 relative z-10 w-full">
-          <div className="mb-4 text-center relative z-10">
+    <section id="careers" className="min-h-screen bg-[#FBFBFB] pb-32 overflow-hidden relative snap-start">
+        {/* Modern grid background for the entire section */}
+        <div className="absolute inset-0 grid-pattern opacity-[0.02] pointer-events-none" />
+        
+        {/* Top-right decorative accent */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="section-container !pt-16 md:!pt-24 relative z-10 w-full">
+          <div className="mb-12 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-3 tracking-tight text-primary">
-                Active Mandates.
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/5 border border-accent/10 text-accent text-[10px] font-bold uppercase tracking-[0.15em] mb-4">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent"></span>
+                </span>
+                Career Opportunities
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-semibold mb-3 tracking-tight text-primary">
+                Active <span className="text-accent">Mandates</span>
               </h2>
-              <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
-                We connect global elite talent with visionary companies. Explore our current portfolio of high-impact strategic mandates.
+              <p className="text-muted/60 text-base leading-relaxed max-w-xl mx-auto">
+                We bridge the gap between elite talent and industry-shaping organizations.
               </p>
             </motion.div>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto flex flex-col pt-4">
+          <div className="w-full max-w-5xl mx-auto flex flex-col gap-8">
             {jobs.length === 0 ? (
               <div className="bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-32 text-center shadow-sm">
                 <Sparkles className="w-12 h-12 text-accent/20 mx-auto mb-6" />
@@ -1504,33 +1512,55 @@ const ActiveMandatesSection = ({ jobs }: { jobs: Job[] }) => {
                 {currentJobs.map((job, idx) => (
                   <motion.div
                     key={job.id}
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.5 }}
+                    transition={{ 
+                      delay: idx * 0.08, 
+                      duration: 0.6,
+                      ease: [0.16, 1, 0.3, 1] 
+                    }}
                     viewport={{ once: true }}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between py-8 border-b border-gray-200 last:border-0 hover:bg-black/[0.02] px-2 sm:px-6 rounded-xl transition-colors gap-6"
+                    className="group relative mb-6 last:mb-0"
                   >
-                    <div className="flex flex-col gap-2.5">
-                      <h3 className="text-xl md:text-[22px] font-semibold text-gray-900 tracking-tight">{job.title}</h3>
-                      <div className="flex flex-wrap items-center gap-2 text-[14.5px] sm:text-[15.5px] text-gray-700">
-                        <span>US / {job.mode} ({job.location})</span>
-                        <span className="w-1 h-1 rounded-full bg-gray-400" />
-                        <span>{job.company && job.company !== 'Amanzi Group' ? job.company : "$135K - $175K"}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[14.5px] sm:text-[15.5px] text-gray-700 mt-0.5">
-                        <Star className="w-4 h-4 text-gray-700" />
-                        <span>3+ years</span>
+                    <div className="relative bg-white hover:bg-[#F8FAFF] border border-black/[0.04] hover:border-accent/10 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-[0_8px_24px_-8px_rgba(31,81,255,0.08)] hover:-translate-y-0.5">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div className="flex flex-col gap-3 flex-1">
+                          <div className="flex items-center gap-3">
+                            <span className="px-2.5 py-1 rounded-full bg-accent/5 text-accent text-[10px] font-semibold uppercase tracking-wider border border-accent/10">
+                              Open Role
+                            </span>
+                          </div>
+                          
+                          <h3 className="text-xl md:text-2xl font-semibold text-primary tracking-tight group-hover:text-accent transition-colors duration-200">
+                            {job.title}
+                          </h3>
+                          
+                          <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
+                            <span className="flex items-center gap-1.5">
+                              <Globe className="w-3.5 h-3.5" />
+                              {job.mode}
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-muted/30" />
+                            <span className="flex items-center gap-1.5">
+                              <Target className="w-3.5 h-3.5" />
+                              {job.location}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <button
+                            onClick={() => setSelectedJob(job)}
+                            className="bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 whitespace-nowrap"
+                          >
+                            Apply Now
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setSelectedJob(job)}
-                      className="bg-[#111] hover:bg-black text-white px-8 md:px-10 py-3 rounded-xl sm:rounded-full text-sm font-medium shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] whitespace-nowrap self-start sm:self-center transition-all hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] hover:-translate-y-0.5"
-                    >
-                      Apply Now
-                    </button>
                   </motion.div>
                 ))}
-                
+
                 {totalPages > 1 && (
                   <div className="flex items-center justify-center gap-6 mt-12 mb-4">
                     <button
@@ -1694,20 +1724,24 @@ const Footer = () => {
       <div className="section-container grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
         <div className="lg:col-span-1">
           <div className="flex items-center gap-2 mb-8">
-            <img src="/logo.png" alt="Amanzi Logo" className="h-12 md:h-16 w-auto object-contain" />
+            <img src="/assets/images/logo.png" alt="Amanzi Logo" className="h-12 md:h-16 w-auto object-contain" />
           </div>
           <p className="text-white/50 leading-relaxed mb-8">
             Strategic talent acquisition for high-growth enterprises and visionary startups.
           </p>
-          <div className="flex gap-4">
-            <a href="https://www.linkedin.com/company/amanzi-technologies/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
+          <div className="flex gap-4 relative z-50">
+            <a href="https://www.linkedin.com/company/3787715/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-all hover:scale-110 pointer-events-auto">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-all hover:scale-110 pointer-events-auto">
               <Twitter className="w-5 h-5" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-colors">
-              <Mail className="w-5 h-5" />
+            <a 
+              href="mailto:info@amanzigroup.co.in"
+              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent transition-all hover:scale-110 pointer-events-auto cursor-pointer relative z-[9999]"
+              style={{ position: 'relative', zIndex: 9999, pointerEvents: 'auto' }}
+            >
+              <Mail className="w-5 h-5 pointer-events-none" />
             </a>
           </div>
         </div>
@@ -1856,7 +1890,7 @@ export default function App() {
   }, [currentView]);
 
   return (
-    <div className="relative bg-white select-none selection:bg-accent/20">
+    <div className="relative bg-white selection:bg-accent/20">
       {currentView !== 'admin' && <Navbar />}
 
       <main className={currentView === 'careers' ? 'pt-20' : ''}>
