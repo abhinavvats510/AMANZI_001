@@ -754,6 +754,20 @@ const ContactSection = () => {
               </div>
             </a>
           </div>
+
+          {/* Google Map */}
+          <div className="mt-12 rounded-[2rem] overflow-hidden border border-black/5 shadow-lg h-96">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14006.985557052467!2d77.0854455967962!3d28.637362121180587!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03a24822ea11%3A0x46544166e7e61ff9!2s4U%20Coworks!5e0!3m2!1sen!2sin!4v1776321630725!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="pointer-events-auto"
+            ></iframe>
+          </div>
         </div>
 
         <motion.div
@@ -1624,13 +1638,12 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="font-bold mb-8 text-lg">Solutions</h4>
+          <h4 className="font-bold mb-8 text-lg">Services</h4>
           <ul className="space-y-4 text-white/50">
-            <li>Permanent Staffing</li>
-            <li>Executive Search</li>
-            <li>Contract Staffing</li>
-            <li>Bulk Hiring</li>
-            <li>RPO Solutions</li>
+            <li>AI and Analytics</li>
+            <li>Staffing Solutions</li>
+            <li>Industry Domains</li>
+            <li>Cyber Security</li>
           </ul>
         </div>
 
