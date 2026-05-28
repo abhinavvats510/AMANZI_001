@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -12,16 +13,7 @@ import {
     UserPlus,
     Key
 } from 'lucide-react';
-
-export interface Job {
-    id: string;
-    title: string;
-    company?: string;
-    description: string;
-    location: string;
-    mode: string;
-    date: string;
-}
+import { Job } from '../types';
 
 export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Dispatch<React.SetStateAction<Job[]>> }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('admin_session') === 'active');

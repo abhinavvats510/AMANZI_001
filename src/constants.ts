@@ -15,16 +15,23 @@ import {
   CheckCircle2,
   Globe
 } from 'lucide-react';
-
-export interface NavLink {
-  label: string;
-  href: string;
-  subLinks?: NavLink[];
-}
+import { NavLink } from './types';
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '#' },
   { label: 'About', href: '#expertise' },
+  {
+    label: 'Products',
+    href: '#',
+    megaMenu: [
+      {
+        links: [
+          { label: 'Amanzi ATS', href: '#ats' },
+          { label: 'Assessment Tool', href: '#assessment-tool' }
+        ]
+      }
+    ]
+  },
   { label: 'Services', href: '#services' },
   { label: 'Jobs', href: '#careers' },
 ];
@@ -89,23 +96,23 @@ export const PAIN_POINTS = [
 export const PROCESS_STEPS = [
   {
     id: '01',
-    title: 'Strategic Deep-Dive',
-    description: 'We don’t start with a job description. We start by understanding your business objectives, team dynamics, and the specific performance outcomes required for the role.'
+    title: 'CV Screening',
+    description: 'Our recruitment process starts with intelligent CV screening to identify candidates based on skills, experience, domain expertise, and role alignment.'
   },
   {
     id: '02',
-    title: 'Market Mapping',
-    description: 'Our research team maps the entire talent landscape, identifying passive candidates who aren’t on job boards but are delivering results for your competitors.'
+    title: 'Advanced Technical Screening',
+    description: 'Shortlisted candidates undergo detailed evaluation by experienced Technical Recruiters to validate technical competency, communication, and project expertise.'
   },
   {
     id: '03',
-    title: 'Multi-Layer Screening',
-    description: 'A rigorous evaluation process covering technical proficiency, cognitive ability, and behavioral alignment. Only the top 3% of candidates reach your desk.'
+    title: 'L1 Online Assessment',
+    description: 'Candidates are assessed through our advanced online assessment platform featuring technical tests, coding evaluations, aptitude, and domain-specific assessments.'
   },
   {
     id: '04',
-    title: 'Alignment & Closing',
-    description: 'We manage the entire interview process, ensuring expectations are managed on both sides to secure high-intent candidates and smooth transitions.'
+    title: 'Quality-Driven Staffing',
+    description: 'Our multi-level screening process ensures faster hiring, better candidate quality, reduced interview effort, and data-driven recruitment decisions.'
   }
 ];
 
