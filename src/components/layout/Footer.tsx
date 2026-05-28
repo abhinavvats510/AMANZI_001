@@ -29,6 +29,8 @@ export const Footer = () => {
             <li><a href="#service-staffing-solutions" className="hover:text-accent transition-colors block">Staffing Solutions</a></li>
             <li><a href="#service-industry-domains" className="hover:text-accent transition-colors block">Industry Domains</a></li>
             <li><a href="#service-cyber-security" className="hover:text-accent transition-colors block">Cyber Security</a></li>
+            <li><a href="#service-global-capability-center-gcc-support" className="hover:text-accent transition-colors block">GCC Support</a></li>
+            <li><a href="#service-business-consulting" className="hover:text-accent transition-colors block">Business Consulting</a></li>
           </ul>
         </div>
 

@@ -49,7 +49,16 @@ export const FeaturedServices = () => {
       label: 'GCC SUPPORT',
       description: 'We provide comprehensive GCC support services to help businesses establish, streamline, and scale their Global Capability Centers efficiently. Our solutions are designed to support organizations with operational management, talent enablement, business coordination, client engagement, and strategic execution through a reliable and professional approach.',
       image: '/assets/images/gcc.png',
-      color: 'bg-accent'
+      color: 'bg-accent',
+      imagePosition: 'object-left'
+    },
+    {
+      title: 'Business Consulting',
+      label: 'STRATEGIC ADVISORY',
+      description: 'Customized business consulting services assisting organizations to optimize operations, design scalable growth strategies, navigate complex digital transformations, and achieve operational excellence.',
+      image: '/assets/images/business_consulting.jpg',
+      color: 'bg-accent',
+      imagePosition: 'object-left'
     }
   ];
 
@@ -65,7 +74,7 @@ export const FeaturedServices = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-[#1A1A3A]">Our Services.</h2>
             <p className="text-muted text-base">
-              Amanzi Consulting coordinates the flow of talent and data analytics to drive innovation, from raw insights to customer value.
+              Amanzi coordinates the flow of talent and data analytics to drive innovation, from raw insights to customer value.
             </p>
           </motion.div>
 
@@ -107,7 +116,7 @@ export const FeaturedServices = () => {
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${(service as any).imagePosition || 'object-center'}`}
                 />
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-700 z-20" />
