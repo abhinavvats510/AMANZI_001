@@ -31,19 +31,30 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash === 'admin') {
-        setCurrentView('admin');
-        window.scrollTo(0, 0);
-      } else if (hash === 'careers') {
+      const cleanHash = hash.split('?')[0];
+
+      if (cleanHash === 'admin') {
+        const params = new URLSearchParams(window.location.search);
+        const isAdminParam = params.get('admin') === 'true' || window.location.hash.includes('admin=true');
+        const isLoggedIn = localStorage.getItem('admin_session') === 'active';
+
+        if (isAdminParam || isLoggedIn) {
+          setCurrentView('admin');
+          window.scrollTo(0, 0);
+        } else {
+          window.location.hash = '';
+          setCurrentView('home');
+        }
+      } else if (cleanHash === 'careers') {
         setCurrentView('careers');
         window.scrollTo(0, 0);
-      } else if (hash === 'cyber-security') {
+      } else if (cleanHash === 'cyber-security') {
         setCurrentView('cyber-security');
         window.scrollTo(0, 0);
-      } else if (hash === 'ats') {
+      } else if (cleanHash === 'ats') {
         setCurrentView('ats');
         window.scrollTo(0, 0);
-      } else if (hash === 'assessment-tool') {
+      } else if (cleanHash === 'assessment-tool') {
         setCurrentView('assessment-tool');
         window.scrollTo(0, 0);
       } else {

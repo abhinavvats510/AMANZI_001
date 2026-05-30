@@ -97,7 +97,7 @@ export const TechnologyExpertise = () => {
       <div className="section-container !py-0">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Heading */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-6">
             <motion.div
               initial={{ opacity: 0, x: -100, filter: 'blur(10px)', scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)', scale: 1 }}
@@ -123,7 +123,7 @@ export const TechnologyExpertise = () => {
           </div>
 
           {/* Right Cards Grid */}
-          <div className="lg:col-span-7 grid md:grid-cols-2 gap-5">
+          <div className="lg:col-span-6 grid md:grid-cols-2 gap-4 max-w-[560px] w-full lg:ml-auto">
             {expertise.map((exp, idx) => (
               <motion.div
                 key={exp.title}
@@ -147,23 +147,23 @@ export const TechnologyExpertise = () => {
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 viewport={{ once: false, margin: "-50px", amount: 0.1 }}
-                className={`p-8 rounded-[2rem] flex flex-col h-full shadow-sm border border-black/[0.04] transition-all duration-700 hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02] transform-gpu will-change-transform ${idx === activeIndex ? 'bg-accent text-white border-transparent shadow-accent/30' : 'bg-white text-primary'
+                className={`p-5 rounded-2xl flex flex-col h-full shadow-sm border border-black/[0.04] transition-all duration-700 hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02] transform-gpu will-change-transform ${idx === activeIndex ? 'bg-accent text-white border-transparent shadow-accent/30' : 'bg-white text-primary'
                   }`}
               >
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-6 border ${idx === activeIndex ? 'bg-white/10 border-white/20 text-white' : 'bg-primary/5 border-primary/10 text-primary'
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-3 border ${idx === activeIndex ? 'bg-white/10 border-white/20 text-white' : 'bg-primary/5 border-primary/10 text-primary'
                   }`}>
-                  <exp.icon className="w-5 h-5" />
+                  <exp.icon className="w-4 h-4" />
                 </div>
 
-                <h3 className="text-xl font-display font-bold mb-3 tracking-tight leading-none">
+                <h3 className="text-lg font-display font-bold mb-2 tracking-tight leading-none">
                   {exp.title}
                 </h3>
-                <p className={`text-xs leading-relaxed mb-6 font-light flex-1 ${idx === activeIndex ? 'text-white/80' : 'text-muted'
+                <p className={`text-[11px] leading-relaxed mb-3 font-light flex-1 ${idx === activeIndex ? 'text-white/80' : 'text-muted'
                   }`}>
                   {exp.description}
                 </p>
 
-                <div className="space-y-2 pt-4 border-t border-current/10 opacity-60">
+                <div className="space-y-1 pt-3 border-t border-current/10 opacity-60">
                   {exp.items.slice(0, 3).map(item => (
                     <div key={item} className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-wider">
                       <div className="w-1.5 h-1.5 rounded-full bg-current" />

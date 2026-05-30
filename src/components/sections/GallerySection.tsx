@@ -105,83 +105,86 @@ export const GallerySection = () => {
           </AnimatePresence>
         </div>
 
-        {/* 3D Carousel Container - Infinite Loop */}
-        <div className="relative w-full max-w-6xl h-[400px] md:h-[480px] flex items-center justify-center perspective-[1200px] transform-style-3d">
-          {images.map((img, idx) => {
-            let distance = idx - activeIndex;
-            if (distance > images.length / 2) distance -= images.length;
-            else if (distance < -images.length / 2) distance += images.length;
+        {/* Carousel Wrapper */}
+        <div className="relative w-full max-w-6xl group/gallery-carousel">
+          {/* 3D Carousel Container - Infinite Loop */}
+          <div className="w-full h-[400px] md:h-[480px] flex items-center justify-center perspective-[1200px] transform-style-3d">
+            {images.map((img, idx) => {
+              let distance = idx - activeIndex;
+              if (distance > images.length / 2) distance -= images.length;
+              else if (distance < -images.length / 2) distance += images.length;
 
-            const isActive = idx === activeIndex;
-            const isVisible = Math.abs(distance) <= 3;
+              const isActive = idx === activeIndex;
+              const isVisible = Math.abs(distance) <= 3;
 
-            return (
-              <motion.div
-                key={idx}
-                initial={false}
-                animate={{
-                  x: isMobile ? distance * 110 : distance * 180,
-                  scale: isActive ? 1 : Math.max(0.6, 0.8 - (Math.abs(distance) * 0.1)),
-                  rotateY: distance * -35,
-                  zIndex: 20 - Math.abs(distance),
-                  opacity: isVisible ? 1 - (Math.abs(distance) * 0.2) : 0,
-                  pointerEvents: isVisible ? 'auto' : 'none',
-                  display: Math.abs(distance) > 4 ? 'none' : 'block'
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 32,
-                }}
-                className="absolute w-[200px] md:w-[320px] aspect-[3/4] cursor-pointer group"
-                onClick={() => setActiveIndex(idx)}
-              >
-                <div className={`w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 border-[6px] bg-white relative ${isActive ? 'border-transparent shadow-accent/20' : 'border-white/50 shadow-black/5'}`}>
-                  <img
-                    src={img.src}
-                    alt={img.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
+              return (
+                <motion.div
+                  key={idx}
+                  initial={false}
+                  animate={{
+                    x: isMobile ? distance * 110 : distance * 180,
+                    scale: isActive ? 1 : Math.max(0.6, 0.8 - (Math.abs(distance) * 0.1)),
+                    rotateY: distance * -35,
+                    zIndex: 20 - Math.abs(distance),
+                    opacity: isVisible ? 1 - (Math.abs(distance) * 0.2) : 0,
+                    pointerEvents: isVisible ? 'auto' : 'none',
+                    display: Math.abs(distance) > 4 ? 'none' : 'block'
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 32,
+                  }}
+                  className="absolute w-[200px] md:w-[320px] aspect-[3/4] cursor-pointer group"
+                  onClick={() => setActiveIndex(idx)}
+                >
+                  <div className={`w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 border-[6px] bg-white relative ${isActive ? 'border-transparent shadow-accent/20' : 'border-white/50 shadow-black/5'}`}>
+                    <img
+                      src={img.src}
+                      alt={img.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
 
-                  {/* Hover Overlay - Premium Content Reveal */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/40 to-primary opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 md:p-12">
-                    <motion.div
-                      className="translate-y-8 group-hover:translate-y-0 transition-transform duration-500"
-                    >
-                      <span className="inline-block px-3 py-1 rounded-full bg-accent text-[9px] font-black uppercase tracking-[0.2em] text-white mb-4">
-                        {img.category}
-                      </span>
-                      <h4 className="text-white text-xl md:text-2xl font-display font-medium leading-tight mb-2">
-                        {img.title}
-                      </h4>
-                      <p className="text-white/70 text-xs md:text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 line-clamp-2">
-                        {img.description}
-                      </p>
+                    {/* Hover Overlay - Premium Content Reveal */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/40 to-primary opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 md:p-12">
+                      <motion.div
+                        className="translate-y-8 group-hover:translate-y-0 transition-transform duration-500"
+                      >
+                        <span className="inline-block px-3 py-1 rounded-full bg-accent text-[9px] font-black uppercase tracking-[0.2em] text-white mb-4">
+                          {img.category}
+                        </span>
+                        <h4 className="text-white text-xl md:text-2xl font-display font-medium leading-tight mb-2">
+                          {img.title}
+                        </h4>
+                        <p className="text-white/70 text-xs md:text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 line-clamp-2">
+                          {img.description}
+                        </p>
 
-                      <div className="mt-4 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200">
-                        <Plus className="w-4 h-4" />
-                      </div>
-                    </motion.div>
+                        <div className="mt-4 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200">
+                          <Plus className="w-4 h-4" />
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-        {/* Navigation Controls */}
-        <div className="flex items-center gap-4 mt-8">
+          {/* Navigation Controls */}
           <button
             onClick={handlePrev}
-            className="w-12 h-12 rounded-full border border-black/5 bg-white flex items-center justify-center hover:bg-black/5 transition-all text-primary/40 group"
+            className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full ring-2 ring-white bg-primary text-white flex items-center justify-center hover:bg-accent active:bg-accent active:text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-lg shadow-black/20 hover:shadow-accent/30"
+            aria-label="Previous slide"
           >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-5 h-5" />
           </button>
           <button
             onClick={handleNext}
-            className="w-14 h-12 rounded-full bg-accent flex items-center justify-center shadow-xl shadow-accent/20 hover:scale-105 transition-all text-white group cursor-pointer"
+            className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full ring-2 ring-white bg-primary text-white flex items-center justify-center hover:bg-accent active:bg-accent active:text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-lg shadow-black/20 hover:shadow-accent/30"
+            aria-label="Next slide"
           >
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </div>

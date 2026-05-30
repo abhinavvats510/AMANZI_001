@@ -8,11 +8,42 @@ export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeDropdownLabel, setActiveDropdownLabel] = useState<string | null>(null);
+  const [expandedMobileLink, setExpandedMobileLink] = useState<string | null>(null);
+  const [showLoginButton, setShowLoginButton] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Clean up any old cached storage keys
+    localStorage.removeItem('show_admin_login');
+    sessionStorage.removeItem('show_admin_login');
+
+    const checkAdminAccess = () => {
+      // 1. Check URL search parameters
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('admin') === 'true') return true;
+
+      // 2. Check hash parameters (e.g. #careers/?admin=true)
+      if (window.location.hash.includes('admin=true')) return true;
+
+      // 3. Check if already logged in as admin
+      if (localStorage.getItem('admin_session') === 'active') return true;
+
+      return false;
+    };
+
+    setShowLoginButton(checkAdminAccess());
+
+    const handleHashChange = () => {
+      setShowLoginButton(checkAdminAccess());
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   return (
@@ -174,12 +205,14 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-4 relative z-10 flex-shrink-0">
-            <a
-              href="#admin"
-              className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
-            >
-              Login
-            </a>
+            {showLoginButton && (
+              <a
+                href="#admin"
+                className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
+              >
+                Login
+              </a>
+            )}
             <button
               className="md:hidden bg-white p-2 rounded-xl text-black shadow-md border border-black/5"
               onClick={() => setIsMobileMenuOpen(true)}
@@ -196,78 +229,97 @@ export const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-white z-[150] p-6 flex flex-col"
+            className="fixed inset-0 bg-white z-[150] p-6 flex flex-col overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-12">
               <img src="/assets/images/logo.png" alt="Amanzi Logo" className="h-10 w-auto object-contain" />
-              <button onClick={() => setIsMobileMenuOpen(false)}>
+              <button onClick={() => { setIsMobileMenuOpen(false); setExpandedMobileLink(null); }}>
                 <X className="w-8 h-8 text-black" />
               </button>
             </div>
             <div className="flex flex-col gap-6 mt-16 items-center w-full">
-              {NAV_LINKS.map((link) => (
-                <div key={link.label} className="flex flex-col items-center gap-2 w-full">
-                  <a
-                    href={link.href}
-                    className="text-xl font-medium text-gray-700 flex items-center gap-2 hover:text-blue-600 transition-colors"
-                    onClick={(e) => {
-                      if (!link.subLinks) {
-                        e.preventDefault();
-                        setIsMobileMenuOpen(false);
-                        const targetId = link.href.replace('#', '');
-                        if (targetId) {
-                          const element = document.getElementById(targetId);
-                          setTimeout(() => {
-                            if (element) {
-                              element.scrollIntoView({ behavior: 'smooth' });
-                            }
-                          }, 300);
-                          window.location.hash = targetId;
+              {NAV_LINKS.map((link) => {
+                const subMenuLinks = link.subLinks || (link.megaMenu ? link.megaMenu.reduce((acc: any[], col) => [...acc, ...(col.links || [])], []) : null);
+                const hasSubLinks = !!subMenuLinks && subMenuLinks.length > 0;
+                return (
+                  <div key={link.label} className="flex flex-col items-center gap-2 w-full">
+                    <a
+                      href={link.href}
+                      className="text-xl font-medium text-gray-700 flex items-center gap-2 hover:text-blue-600 transition-colors"
+                      onClick={(e) => {
+                        if (hasSubLinks) {
+                          e.preventDefault();
+                          setExpandedMobileLink(prev => prev === link.label ? null : link.label);
                         } else {
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                          window.location.hash = '';
+                          e.preventDefault();
+                          setIsMobileMenuOpen(false);
+                          setExpandedMobileLink(null);
+                          const targetId = link.href.replace('#', '');
+                          if (targetId) {
+                            const element = document.getElementById(targetId);
+                            setTimeout(() => {
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                              }
+                            }, 300);
+                            window.location.hash = targetId;
+                          } else {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            window.location.hash = '';
+                          }
                         }
-                      }
-                    }}
-                  >
-                    {link.label} {link.subLinks && <ChevronDown className="w-5 h-5 text-blue-500" />}
-                  </a>
-                  {link.subLinks && (
-                    <div className="flex flex-col items-center gap-3 mt-2 bg-blue-50/50 w-full py-4 rounded-3xl">
-                      {link.subLinks.map(subLink => (
-                        <a
-                          key={subLink.label}
-                          href={subLink.href}
-                          className="text-[17px] font-medium text-gray-600 hover:text-blue-600 transition-colors"
-                          onClick={(e) => {
-                            setIsMobileMenuOpen(false);
-                            const targetId = subLink.href.replace('#', '');
-                            if (targetId) {
-                              e.preventDefault();
-                              const element = document.getElementById(targetId);
-                              setTimeout(() => {
-                                if (element) {
-                                  element.scrollIntoView({ behavior: 'smooth' });
-                                }
-                              }, 300);
-                              window.location.hash = targetId;
-                            }
-                          }}
+                      }}
+                    >
+                      {link.label} {hasSubLinks && <ChevronDown className={`w-5 h-5 text-blue-500 transition-transform duration-300 ${expandedMobileLink === link.label ? 'rotate-180' : ''}`} />}
+                    </a>
+                    <AnimatePresence>
+                      {hasSubLinks && subMenuLinks && expandedMobileLink === link.label && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex flex-col items-center gap-3 mt-2 bg-blue-50/50 w-full py-4 rounded-3xl overflow-hidden"
                         >
-                          {subLink.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <a
-                href="#admin"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg text-center"
-              >
-                Login
-              </a>
+                          {subMenuLinks.map(subLink => (
+                            <a
+                              key={subLink.label}
+                              href={subLink.href}
+                              className="text-[17px] font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                              onClick={(e) => {
+                                setIsMobileMenuOpen(false);
+                                setExpandedMobileLink(null);
+                                const targetId = subLink.href.replace('#', '');
+                                if (targetId) {
+                                  e.preventDefault();
+                                  const element = document.getElementById(targetId);
+                                  setTimeout(() => {
+                                    if (element) {
+                                      element.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                  }, 300);
+                                  window.location.hash = targetId;
+                                }
+                              }}
+                            >
+                              {subLink.label}
+                            </a>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+              {showLoginButton && (
+                <a
+                  href="#admin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg text-center"
+                >
+                  Login
+                </a>
+              )}
             </div>
           </motion.div>
         )}

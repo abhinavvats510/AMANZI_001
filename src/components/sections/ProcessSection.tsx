@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { motion, useTransform, useSpring, useMotionValue, useInView, animate } from 'motion/react';
 import { PROCESS_STEPS } from '../../constants';
 
-const ProcessStep = ({ step, index, progress }: { step: any, index: number, progress: any }) => {
+const ProcessStep = ({ step, index, progress }: { step: any, index: number, progress: any, key?: React.Key }) => {
   const start = index * 0.2;
   const end = (index + 1) * 0.2;
 
@@ -15,7 +15,7 @@ const ProcessStep = ({ step, index, progress }: { step: any, index: number, prog
   return (
     <motion.div
       style={{ opacity, y, scale }}
-      className="relative group cursor-default p-7 rounded-[2rem] bg-accent border border-white/5 shadow-lg hover:shadow-2xl hover:shadow-accent/30 transition-all duration-700"
+      className="relative group cursor-default p-5 rounded-[2rem] bg-accent border border-white/5 shadow-lg hover:shadow-2xl hover:shadow-accent/30 transition-all duration-700"
     >
       <motion.div
         style={{ y: numberY, opacity: numberOpacity }}
@@ -25,13 +25,13 @@ const ProcessStep = ({ step, index, progress }: { step: any, index: number, prog
       </motion.div>
 
       <div className="relative z-10">
-        <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center mb-6 shadow-lg shadow-black/20">
-          <span className="font-display font-bold text-lg">{step.id}</span>
+        <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center mb-4 shadow-lg shadow-black/20">
+          <span className="font-display font-bold text-base">{step.id}</span>
         </div>
-        <h3 className="text-xl md:text-2xl font-display font-bold mb-3 text-white tracking-tight leading-tight">
+        <h3 className="text-lg md:text-xl font-display font-bold mb-2 text-white tracking-tight leading-tight">
           {step.title}
         </h3>
-        <p className="text-white/80 leading-relaxed text-[13px] md:text-sm font-light">
+        <p className="text-white/80 leading-relaxed text-[12px] md:text-xs font-light">
           {step.description}
         </p>
       </div>
@@ -79,7 +79,7 @@ export const ProcessSection = () => {
           </p>
         </motion.div>
 
-        <div className="relative w-full">
+        <div className="relative w-full max-w-[1000px] mx-auto">
           {/* Progressive Line */}
           <div className="hidden lg:block absolute top-[50%] left-0 right-0 h-[2px] bg-black/[0.05] -translate-y-1/2">
             <motion.div
@@ -92,7 +92,7 @@ export const ProcessSection = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 relative z-10 w-full">
             {PROCESS_STEPS.map((step, idx) => (
               <ProcessStep
                 key={step.id}

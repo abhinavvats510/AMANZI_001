@@ -20,6 +20,7 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [showForgotMsg, setShowForgotMsg] = useState(false);
     const [isAddingJob, setIsAddingJob] = useState(false);
     const [isCreatingAdmin, setIsCreatingAdmin] = useState(false);
 
@@ -162,6 +163,21 @@ export const AdminPanel = ({ jobs, setJobs }: { jobs: Job[], setJobs: React.Disp
                                 className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white focus:outline-none focus:border-accent text-sm"
                                 required
                             />
+                            <div className="flex justify-end px-1">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowForgotMsg(!showForgotMsg)}
+                                    className="text-[11px] text-white/40 hover:text-accent transition-colors cursor-pointer"
+                                >
+                                    Forgot Password?
+                                </button>
+                            </div>
+                            {showForgotMsg && (
+                                <div className="text-[11px] text-white/60 bg-white/5 border border-white/10 p-4 rounded-xl leading-relaxed flex items-start gap-2.5">
+                                    <AlertCircle className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                                    <span>Please contact the database administrator to manually reset security credentials.</span>
+                                </div>
+                            )}
                             {error && <p className="text-red-400 text-[10px] font-bold uppercase tracking-widest mt-2 flex items-center gap-2 px-2">
                                 <AlertCircle className="w-3 h-3" /> {error}
                             </p>}
