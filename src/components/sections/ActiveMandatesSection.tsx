@@ -10,6 +10,8 @@ interface ActiveMandatesSectionProps {
 
 export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  //Job view modal 
+  const [viewJob, setViewJob] = useState<Job | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 9;
 
@@ -18,11 +20,83 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
 
   return (
     <>
-      <ApplyModal
+      <>
+        <ApplyModal
+          isOpen={!!selectedJob}
+          onClose={() => setSelectedJob(null)}
+          jobTitle={selectedJob?.title || ''}
+        />
+
+        {viewJob && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+            <div className="relative w-full max-w-2xl bg-white rounded-[2rem] p-8 shadow-2xl overflow-y-auto max-h-[90vh] border border-black/5">
+
+              {/* Close */}
+              <button
+                onClick={() => setViewJob(null)}
+                className="absolute top-5 right-5 text-gray-400 hover:text-black transition-colors text-2xl"
+              >
+                ×
+              </button>
+
+              {/* Logo */}
+              <div className="flex justify-center mb-6">
+                <div className="w-24 h-24 rounded-2xl bg-[#F6F8FC] border border-black/5 flex items-center justify-center shadow-sm">
+                  <span className="text-2xl font-semibold text-accent">
+                    {viewJob.company?.charAt(0) || 'C'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h2 className="text-3xl font-semibold text-center text-primary tracking-tight">
+                {viewJob.title}
+              </h2>
+
+              {/* Company */}
+              <p className="text-center text-accent font-medium mt-2">
+                {viewJob.company || 'Confidential Company'}
+              </p>
+
+              {/* Meta */}
+              <div className="flex justify-center gap-3 mt-4 text-sm text-muted">
+                <span>{viewJob.mode}</span>
+                <span>•</span>
+                <span>{viewJob.location}</span>
+              </div>
+
+              {/* Description */}
+              <div className="mt-8 bg-[#FAFBFC] rounded-2xl p-6 border border-black/5">
+                <h3 className="text-lg font-semibold text-primary mb-4">
+                  Job Description
+                </h3>
+
+                <p className="text-muted leading-relaxed whitespace-pre-line">
+                  {viewJob.description}
+                </p>
+              </div>
+
+              {/* Apply */}
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={() => {
+                    setSelectedJob(viewJob);
+                    setViewJob(null);
+                  }}
+                  className="bg-accent text-white px-6 py-3 rounded-xl font-medium hover:bg-accent/90 hover:shadow-lg transition-all duration-200"
+                >
+                  Apply Now
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+      {/* <ApplyModal
         isOpen={!!selectedJob}
         onClose={() => setSelectedJob(null)}
         jobTitle={selectedJob?.title || ''}
-      />
+      /> */}
       <section id="careers" className="bg-[#FBFBFB] pb-24 overflow-hidden relative snap-start">
         {/* Modern grid background for the entire section */}
         <div className="absolute inset-0 grid-pattern opacity-[0.02] pointer-events-none" />
@@ -95,7 +169,14 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => setViewJob(job)}
+                            className="border border-accent/15 text-accent px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/5 transition-all duration-200 whitespace-nowrap"
+                          >
+                            View Job
+                          </button>
+
                           <button
                             onClick={() => setSelectedJob(job)}
                             className="bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 whitespace-nowrap"
@@ -103,6 +184,15 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
                             Apply Now
                           </button>
                         </div>
+
+                        {/* <div className="flex items-center gap-4">
+                          <button
+                            onClick={() => setSelectedJob(job)}
+                            className="bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 whitespace-nowrap"
+                          >
+                            Apply Now
+                          </button>
+                        </div> */}
                       </div>
                     </div>
                   </motion.div>
