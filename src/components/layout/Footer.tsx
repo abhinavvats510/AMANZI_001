@@ -28,8 +28,8 @@ export const Footer = () => {
             <li><a href="#service-ai-analytics" className="hover:text-accent transition-colors block">AI and Analytics</a></li>
             <li><a href="#service-staffing-solutions" className="hover:text-accent transition-colors block">Staffing Solutions</a></li>
             <li><a href="#service-industry-domains" className="hover:text-accent transition-colors block">Industry Domains</a></li>
-            <li><a href="#service-cyber-security" className="hover:text-accent transition-colors block">Cyber Security</a></li>
-            <li><a href="#service-global-capability-center-gcc-support" className="hover:text-accent transition-colors block">GCC Support</a></li>
+            <li><a href="#cyber-security" className="hover:text-accent transition-colors block">Cyber Security</a></li>
+            <li><a href="#service-gcc-support" className="hover:text-accent transition-colors block">GCC Support</a></li>
             <li><a href="#service-business-consulting" className="hover:text-accent transition-colors block">Business Consulting</a></li>
           </ul>
         </div>
@@ -40,7 +40,7 @@ export const Footer = () => {
             <li><a href="#approach" className="hover:text-accent transition-colors">About Us</a></li>
             <li><a href="#approach" className="hover:text-accent transition-colors">Our Approach</a></li>
             <li><a href="#careers" className="hover:text-accent transition-colors">Careers</a></li>
-            <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
+            <li><a href="#contact" className="hover:text-accent transition-colors">Contact Us</a></li>
           </ul>
         </div>
       </div>

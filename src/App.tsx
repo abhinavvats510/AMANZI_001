@@ -85,12 +85,39 @@ export default function App() {
   useEffect(() => {
     if (currentView === 'home' && window.location.hash) {
       const targetId = window.location.hash.replace('#', '');
-      const validHomeHashes = ['expertise', 'services', 'approach', 'careers'];
+      const validHomeHashes = [
+        'expertise',
+        'services',
+        'approach',
+        'careers',
+        'contact',
+        'why-choose-us',
+        'gallery',
+        'service-ai-analytics',
+        'service-staffing-solutions',
+        'service-industry-domains',
+        'service-cyber-security',
+        'service-gcc-support',
+        'service-business-consulting'
+      ];
       if (validHomeHashes.includes(targetId)) {
-        const timer = setTimeout(() => {
-          document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-        return () => clearTimeout(timer);
+        const scrollToTarget = () => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        };
+        scrollToTarget();
+        const t1 = setTimeout(scrollToTarget, 100);
+        const t2 = setTimeout(scrollToTarget, 300);
+        const t3 = setTimeout(scrollToTarget, 600);
+        const t4 = setTimeout(scrollToTarget, 1000);
+        return () => {
+          clearTimeout(t1);
+          clearTimeout(t2);
+          clearTimeout(t3);
+          clearTimeout(t4);
+        };
       }
     }
   }, [currentView]);

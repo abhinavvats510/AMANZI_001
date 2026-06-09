@@ -106,7 +106,7 @@ export const PROCESS_STEPS = [
   },
   {
     id: '03',
-    title: 'L1 Online Assessment',
+    title: 'L1 Assessment',
     description: 'Candidates are assessed through our advanced online assessment platform featuring technical tests, coding evaluations, aptitude, and domain-specific assessments.'
   },
   {

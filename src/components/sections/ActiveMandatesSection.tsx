@@ -111,7 +111,7 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-display font-semibold mb-3 tracking-tight text-primary">
-                Active <span className="text-accent">Mandates</span>
+                Active Mandates
               </h2>
               <p className="text-muted/60 text-base leading-relaxed max-w-xl mx-auto">
                 We bridge the gap between elite talent and industry-shaping organizations.
@@ -119,7 +119,7 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
             </motion.div>
           </div>
 
-          <div className="w-full max-w-5xl mx-auto">
+          <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
             {jobs.length === 0 ? (
               <div className="bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-24 text-center shadow-sm w-full">
                 <Sparkles className="w-12 h-12 text-accent/20 mx-auto mb-6" />
@@ -128,7 +128,7 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {currentJobs.map((job, idx) => (
                     <motion.div
                       key={job.id}
