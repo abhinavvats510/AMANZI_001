@@ -41,10 +41,8 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
 
               {/* Logo */}
               <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 rounded-2xl bg-[#F6F8FC] border border-black/5 flex items-center justify-center shadow-sm">
-                  <span className="text-2xl font-semibold text-accent">
-                    {viewJob.company?.charAt(0) || 'C'}
-                  </span>
+                <div className="w-32 h-16 rounded-xl bg-white border border-black/5 flex items-center justify-center shadow-sm p-3">
+                  <img src="/assets/images/logo.png" alt="Amanzi Logo" className="w-full h-full object-contain" />
                 </div>
               </div>
 
@@ -121,31 +119,31 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
             </motion.div>
           </div>
 
-          <div className="w-full max-w-5xl mx-auto flex flex-col gap-8">
+          <div className="w-full max-w-5xl mx-auto">
             {jobs.length === 0 ? (
-              <div className="bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-24 text-center shadow-sm">
+              <div className="bg-[#F9FAFB] border border-black/5 rounded-[3.5rem] py-24 text-center shadow-sm w-full">
                 <Sparkles className="w-12 h-12 text-accent/20 mx-auto mb-6" />
                 <p className="text-muted/60 text-base italic text-primary/40">Exclusive strategic mandates are currently being finalized.</p>
                 <p className="text-muted/40 text-[10px] font-black uppercase tracking-widest mt-4">Check back shortly for premium opportunities.</p>
               </div>
             ) : (
               <>
-                {currentJobs.map((job, idx) => (
-                  <motion.div
-                    key={job.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: idx * 0.08,
-                      duration: 0.6,
-                      ease: [0.16, 1, 0.3, 1]
-                    }}
-                    viewport={{ once: true }}
-                    className="group relative mb-6 last:mb-0"
-                  >
-                    <div className="relative bg-white hover:bg-[#F8FAFF] border border-black/[0.04] hover:border-accent/10 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-[0_8px_24px_-8px_rgba(31,81,255,0.08)] hover:-translate-y-0.5">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <div className="flex flex-col gap-3 flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {currentJobs.map((job, idx) => (
+                    <motion.div
+                      key={job.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: idx * 0.08,
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1]
+                      }}
+                      viewport={{ once: true }}
+                      className="group relative h-full"
+                    >
+                      <div className="h-full relative bg-white hover:bg-[#F8FAFF] border border-black/[0.08] hover:border-accent/30 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-sm hover:shadow-[0_8px_24px_-8px_rgba(31,81,255,0.12)] hover:-translate-y-0.5 flex flex-col justify-between gap-6">
+                        <div className="flex flex-col gap-3">
                           <div className="flex items-center gap-3">
                             <span className="px-2.5 py-1 rounded-full bg-accent/5 text-accent text-[10px] font-semibold uppercase tracking-wider border border-accent/10">
                               Open Role
@@ -169,34 +167,25 @@ export const ActiveMandatesSection = ({ jobs }: ActiveMandatesSectionProps) => {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 mt-auto">
                           <button
                             onClick={() => setViewJob(job)}
-                            className="border border-accent/15 text-accent px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/5 transition-all duration-200 whitespace-nowrap"
+                            className="flex-1 border border-accent/15 text-accent px-4 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/5 transition-all duration-200 text-center cursor-pointer whitespace-nowrap"
                           >
                             View Job
                           </button>
 
                           <button
                             onClick={() => setSelectedJob(job)}
-                            className="bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 whitespace-nowrap"
+                            className="flex-1 bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 text-center cursor-pointer whitespace-nowrap"
                           >
                             Apply Now
                           </button>
                         </div>
-
-                        {/* <div className="flex items-center gap-4">
-                          <button
-                            onClick={() => setSelectedJob(job)}
-                            className="bg-accent text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-accent/90 hover:shadow-lg transition-all duration-200 whitespace-nowrap"
-                          >
-                            Apply Now
-                          </button>
-                        </div> */}
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
 
                 {totalPages > 1 && (
                   <div className="flex items-center justify-center gap-6 mt-12 mb-4">

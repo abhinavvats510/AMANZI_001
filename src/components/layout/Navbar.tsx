@@ -207,7 +207,7 @@ export const Navbar = () => {
           <div className="flex items-center gap-4 relative z-10 flex-shrink-0">
             {showLoginButton && (
               <a
-                href="#admin"
+                href="#admin?admin=true"
                 className="hidden md:block bg-black text-white px-8 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-black/80 transition-all shadow-lg text-center ml-1"
               >
                 Login
@@ -313,7 +313,7 @@ export const Navbar = () => {
               })}
               {showLoginButton && (
                 <a
-                  href="#admin"
+                  href="#admin?admin=true"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="bg-black text-white w-full max-w-xs py-5 rounded-full text-lg font-bold uppercase tracking-widest mt-6 hover:bg-black/80 transition-colors shadow-lg text-center"
                 >
